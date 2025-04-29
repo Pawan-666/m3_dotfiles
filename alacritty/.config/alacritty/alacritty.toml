@@ -1,0 +1,89 @@
+[env]
+TERM = "alacritty"
+
+[font]
+# size = 18.0
+size = 20.0
+
+# [shell]
+# program = "/bin/zsh"
+# # The 2 commands after login are needed to automatically attach to an existing tmux session
+# # If no session exists, a new one is created
+# args = ["--login", "-c", "/opt/homebrew/bin/tmux attach || //opt/homebrew/bin/tmux"]
+
+[window]
+decorations = "buttonless" # decorations = "none" decorations = "transparent"
+# opacity = 0.9
+# opacity = 0.8
+opacity = 0.7
+
+[font.normal]
+# family = "Hack Nerd Font"
+# style = "Regular"
+# family = "MesloLGS Nerd Font Mono"
+# family = "CaskaydiaCove Nerd Font"
+family = "JetBrainsMono Nerd Font"
+style = "Light"
+
+# [font.bold]
+# # family = "MesloLGS Nerd Font Mono"
+# family = "CaskaydiaCove Nerd Font"
+# style = "Bold"
+
+# [font.italic]
+# family = "CaskaydiaCove Nerd Font"
+# # family = "MesloLGS Nerd Font Mono"
+# style = "Italic"
+
+[[keyboard.bindings]]
+chars = "\u001Bm"
+key = "A"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u001B."
+key = "Period"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u001Bd"
+key = "D"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u001Bb"
+key = "B"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u001Bt"
+key = "T"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u001Bf"
+key = "F"
+mods = "Command"
+
+[[keyboard.bindings]]
+chars = "\u000E"
+key = "N"
+mods = "Control"
+
+[[keyboard.bindings]]
+action = "ToggleViMode"
+key = "Space"
+mods = "Control"
+
+
+[window.padding]
+x = 8
+y = 8
+
+[selection]
+save_to_clipboard = true
+
+[general]
+live_config_reload = true
+# https://alacritty.org/config-alacritty.html
+import = ["/Users/pawan/.config/alacritty/catppuccin-mocha.toml"]

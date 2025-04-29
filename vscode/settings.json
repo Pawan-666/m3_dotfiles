@@ -1,0 +1,31 @@
+    {
+    "vim.insertModeKeyBindings": [
+        {
+            "before": ["j", "j"],
+            "after": ["<esc>"]
+        }
+    
+    ],
+  "vim.normalModeKeyBindingsNonRecursive": [
+    
+    ],
+    "vim.useSystemClipboard": true,
+    "window.menuBarVisibility": "toggle",
+    "editor.minimap.enabled": false,
+    "workbench.startupEditor": "newUntitledFile",
+    "window.zoomLevel": 1,
+    "editor.renderLineHighlight": "none",
+    "workbench.activityBar.location": "top",
+    "editor.lineNumbers": "relative",
+    "files.autoSave": "afterDelay",
+    "workbench.colorTheme": "Alt Catppuccin Frappé",
+    "diffEditor.codeLens": true,
+    "github.copilot.enable": {
+        "*": false,
+        "plaintext": false,
+        "markdown": false,
+        "scminput": false
+    },
+}
+
+

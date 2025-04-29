@@ -1,0 +1,22 @@
+#!/bin/bash
+
+options=(
+	style=round
+	# style=square
+	width=4.0
+	hidpi=off
+  # white
+	# active_color=0xffe2e2e3
+	# inactive_color=0xff414550
+  # yellow
+  # active_color=0xffa6e22e
+  # inactive_color=0xff2c4a1c
+  active_color=0xff66d9ef
+  inactive_color=0xff2c4a1c
+)
+
+
+borders "${options[@]}"
+
+
+#brew services start borders
