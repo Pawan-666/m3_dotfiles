@@ -13,9 +13,9 @@ size = 20.0
 
 [window]
 decorations = "buttonless" # decorations = "none" decorations = "transparent"
-# opacity = 0.9
+opacity = 0.9
 # opacity = 0.8
-opacity = 0.7
+# opacity = 0.7
 
 [font.normal]
 # family = "Hack Nerd Font"
