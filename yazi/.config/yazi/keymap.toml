@@ -150,7 +150,7 @@ keymap = [
 	{ on = [ "g", "." ],       run = "cd ~/mac_dotfiles/",             desc = "Go to the home directory" },
     { on = [ "g", "/" ],       run = "cd /",             desc = "/" },
 	{ on = [ "g", "L" ],       run = "cd /Users/pawan/learning",    desc = "Learning" },
-    { on = [ "g", "B" ],       run = "cd ~/Downloads/Books",             desc = "Boobs" },
+    { on = [ "g", "B" ],       run = "cd /Users/pawan/wiki/my_blog/",             desc = "blog" },
     { on = [ "g", "e" ],       run = "cd /Users/pawan/wiki/ekbana/",  desc = "linux" },
     { on = [ "g", "w" ],       run = "cd /Users/pawan/wiki",  desc = "wiki" },
 	{ on = [ "g", "t" ],       run = "cd ~/test",       desc = "test" },
