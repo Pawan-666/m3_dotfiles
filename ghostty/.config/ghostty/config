@@ -1,10 +1,10 @@
-command = zsh --login -c "if command -v tmux >/dev/null 2>&1; then tmux attach || tmux; else zsh; fi"
+# command = zsh --login -c "if command -v tmux >/dev/null 2>&1; then tmux attach || tmux; else zsh; fi"
 window-padding-x = 8,2
 window-padding-y = 8,2
 # theme = AtomOneLight
 # theme = 3024 Day
-theme = catppuccin-mocha
-# theme = GruvboxDarkHard
+# theme = catppuccin-mocha
+theme = GruvboxDarkHard
 font-family = "JetBrainsMono Nerd Font ExtraLight"
 # font-family = "JetBrainsMono NFM Light"
 font-size = 20

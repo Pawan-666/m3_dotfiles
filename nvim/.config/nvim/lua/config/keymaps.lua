@@ -71,3 +71,12 @@ vim.api.nvim_set_keymap("n", "<Leader>/", "gcc", { noremap = false, silent = tru
 
 -- Map <Leader>/ to 'gc' in visual mode
 vim.api.nvim_set_keymap("v", "<Leader>/", "gc", { noremap = false, silent = true })
+
+-- vim.keymap.set("n", "<leader>ul", function()
+--   vim.cmd("LspStop")
+--   vim.defer_fn(function()
+--     vim.cmd("LspStart")
+--   end, 100) -- wait 100ms before restarting
+-- end, { desc = "Force restart LSP" })
+
+map("n", "L", ":LspStart<CR>", { desc = "lsp start" })

@@ -2,7 +2,7 @@
 # If you encounter any issues, please make an issue at https://github.com/yazi-rs/schemas.
 "$schema" = "https://yazi-rs.github.io/schemas/keymap.json"
 
-[manager]
+[mgr]
 
 keymap = [
 	{ on = [ "<Esc>" ], run = "escape",             desc = "Exit visual mode, clear selected, or cancel search" },
@@ -154,13 +154,16 @@ keymap = [
     { on = [ "g", "e" ],       run = "cd /Users/pawan/wiki/ekbana/",  desc = "linux" },
     { on = [ "g", "w" ],       run = "cd /Users/pawan/wiki",  desc = "wiki" },
 	{ on = [ "g", "t" ],       run = "cd ~/test",       desc = "test" },
+	# { on = [ "g", "t" ],       run = "cd /tmp",          desc = "Go to the temporary directory" },
 	{ on = [ "g", "T" ],       run = "cd ~/.tmux_files/",     desc = "tmux files" },
 	# { on = [ "g", "w" ],       run = "cd /Users/pawan/wiki",      desc = "wiki" },
 	{ on = [ "g", "u" ],       run = "cd /Users/pawan/wiki/uba",   desc = "uba" },
-	{ on = [ "g", "b" ],       run = "cd /Users/pawan/wiki/my_blog/collections/content/blog",  desc = "notes" },
+	# { on = [ "g", "b" ],       run = "cd /Users/pawan/wiki/my_blog/collections/content/blog",  desc = "notes" },
 	{ on = [ "g", "c" ],       run = "cd ~/.config",     desc = "Go to the config directory" },
 	{ on = [ "g", "d" ],       run = "cd ~/Downloads",   desc = "Go to the downloads directory" },
-	{ on = [ "g", "t" ],       run = "cd /tmp",          desc = "Go to the temporary directory" },
+	{ on = [ "g", "D" ],       run = "cd ~/Desktop/",   desc = "Go to the desktop directory" },
+	{ on = [ "g", "o" ],       run = "cd ~/obsidian_pawan",   desc = "obsidian" },
+	{ on = [ "g", "b" ],       run = "cd ~/obsidian_pawan/1_Projects/blogs/",   desc = "blogs" },
 	{ on = [ "g", "<Space>" ], run = "cd --interactive", desc = "Go to a directory interactively" },
 
 
@@ -294,7 +297,7 @@ keymap = [
 	{ on = [ "<Down>" ], run = "arrow 1",  desc = "Move cursor down" },
 
 	{ on = [ "<C-p>" ], run = "arrow -1", desc = "Move cursor up" },
-	{ on = [ "<C-n>" ], run = "arrow 1",  desc = "Move cursor down" },
+	# { on = [ "<C-n>" ], run = "arrow 1",  desc = "Move cursor down" },
 
 	{ on = [ "~" ], run = "help", desc = "Open help" }
 ]
@@ -322,19 +325,28 @@ keymap = [
 
 	# Filtering
 	{ on = [ "/" ], run = "filter", desc = "Apply a filter for the help items" },
-    { on = [ "f" ], run = "filter --smart", desc = "Filter the files" },
+  { on = [ "f" ], run = "filter --smart", desc = "Filter the files" },
+  # Drag and drop files 
+  # { on = [ "<C-n>" ], run = "shell --confirm 'ripdrag \"$@\"'", desc ="ripdrag" },
+#   { on = [ "<C-n>" ], run = '''
+#     shell 'ripdrag -x -i -T "$1"' --confirm
+# ''' }
+
 
 ]
 
-[[manager.prepend_keymap]]
+[[mgr.prepend_keymap]]
 # on   = [ "<C-s>" ]
 on   = [ "w" ]
 run  = 'shell "$SHELL" --block --confirm'
 desc = "Open shell here"
 
-[[manager.prepend_keymap]]
+[[mgr.prepend_keymap]]
 on = "<C-p>"
 run = '''
   shell 'qlmanage -p "$@"' --confirm
 '''
 
+[[mgr.prepend_keymap]]
+on = [ "<C-n>" ]
+run = ''' shell 'ripdrag "$@" -x 2>/dev/null &' --confirm '''
