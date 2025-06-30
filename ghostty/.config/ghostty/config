@@ -30,20 +30,8 @@ keybind = cmd+f=text:\x1bf
 keybind = ctrl+n=text:\x0e
 
 
-# WORKS: Binding  cmd+. to an action
-# keybind = cmd+.=toggle_quick_terminal
-
-# WORKS: Binding cmd+b to esc:.
-# keybind = cmd+b=esc:.
-
-# keybind = cmd+.=text:\x1b.
-# DOES NOT WORK: Binding cmd+. to esc:.
 keybind = super+.=esc:.
-# keybind = cmd+period=esc:.
-# keybind = cmd+.=esc:.
-# keybind = cmd+.=text:\x1b.
-# keybind = cmd+period=text:\x1b.
-# keybind = super+period=text:\x1b.
-# keybind = cmd+period=toggle_quick_terminal
+
+
 keybind = "cmd+shift+h=write_screen_file:paste"
 keybind = "cmd+shift+j=text:\x01vi +1000000 \n"

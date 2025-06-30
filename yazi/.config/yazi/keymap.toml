@@ -142,8 +142,8 @@ keymap = [
 	{ on = [ "{" ], run = "tab_swap -1", desc = "Swap the current tab with the previous tab" },
 	{ on = [ "}" ], run = "tab_swap 1",  desc = "Swap the current tab with the next tab" },
 
-	# Tasks
-	{ on = [ "T" ], run = "tasks_show", desc = "Show the tasks manager" },
+	# # Tasks
+	# { on = [ "T" ], run = "tasks_show", desc = "Show the tasks manager" },
 
 	# Goto
 	{ on = [ "g", "h" ],       run = "cd ~",             desc = "Go to the home directory" },
@@ -297,7 +297,7 @@ keymap = [
 	{ on = [ "<Down>" ], run = "arrow 1",  desc = "Move cursor down" },
 
 	{ on = [ "<C-p>" ], run = "arrow -1", desc = "Move cursor up" },
-	# { on = [ "<C-n>" ], run = "arrow 1",  desc = "Move cursor down" },
+	{ on = [ "<C-n>" ], run = "arrow 1",  desc = "Move cursor down" },
 
 	{ on = [ "~" ], run = "help", desc = "Open help" }
 ]
@@ -326,11 +326,6 @@ keymap = [
 	# Filtering
 	{ on = [ "/" ], run = "filter", desc = "Apply a filter for the help items" },
   { on = [ "f" ], run = "filter --smart", desc = "Filter the files" },
-  # Drag and drop files 
-  # { on = [ "<C-n>" ], run = "shell --confirm 'ripdrag \"$@\"'", desc ="ripdrag" },
-#   { on = [ "<C-n>" ], run = '''
-#     shell 'ripdrag -x -i -T "$1"' --confirm
-# ''' }
 
 
 ]
@@ -350,3 +345,8 @@ run = '''
 [[mgr.prepend_keymap]]
 on = [ "<C-n>" ]
 run = ''' shell 'ripdrag "$@" -x 2>/dev/null &' --confirm '''
+
+[[mgr.prepend_keymap]]
+on   = "T"
+run  = "plugin toggle-pane max-current"
+desc = "Maximize or restore the preview pane"

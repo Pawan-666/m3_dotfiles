@@ -9,3 +9,6 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.conceallevel = 0 -- disable conceal in markdown
   end,
 })
+
+-- Disable search highlight globally
+vim.o.hlsearch = false

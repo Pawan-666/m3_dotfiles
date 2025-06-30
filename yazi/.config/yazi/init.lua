@@ -16,3 +16,5 @@ end
 require("session"):setup({
 	sync_yanked = true,
 })
+
+-- ya pkg add yazi-rs/plugins:toggle-pane
