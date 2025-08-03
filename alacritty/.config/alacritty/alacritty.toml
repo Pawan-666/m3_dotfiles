@@ -1,121 +1,118 @@
+# ================================================
+# Alacritty Terminal Configuration
+# ================================================
+
+# Environment variables to set when starting Alacritty
 [env]
+# Set the TERM environment variable to identify this as an Alacritty terminal
+# This helps programs detect terminal capabilities correctly
 TERM = "alacritty"
 
+# Font configuration
 [font]
-# size = 18.0
+# Current font size in points - controls overall text size in the terminal
 size = 20.0
 
-# [shell]
-# program = "/bin/zsh"
-# # The 2 commands after login are needed to automatically attach to an existing tmux session
-# # If no session exists, a new one is created
-# args = ["--login", "-c", "/opt/homebrew/bin/tmux attach || //opt/homebrew/bin/tmux"]
-
+# Window appearance settings
 [window]
-decorations = "buttonless" # decorations = "none" decorations = "transparent"
-# opacity = 0.99
-opacity = 0.9
-# opacity = 0.8
-# opacity = 0.7
+# Window decorations - "buttonless" removes window buttons but keeps title bar
+# Other options: "none" (no decorations), "transparent" (see-through title bar)
+decorations = "buttonless"
 
+# Window transparency/opacity settings (0.0 = fully transparent, 1.0 = fully opaque)
+opacity = 0.9     # Current setting - slightly transparent
+
+# Normal font family and style configuration
 [font.normal]
-# family = "Hack Nerd Font"
-# style = "Regular"
-# family = "MesloLGS Nerd Font Mono"
-# family = "CaskaydiaCove Nerd Font"
-family = "JetBrainsMono Nerd Font"
-style = "Light"
+# Current font configuration
+family = "JetBrainsMono Nerd Font"  # Font family with programming ligatures and icons
+style = "Light"                     # Font weight/style
 
-# [font.bold]
-# # family = "MesloLGS Nerd Font Mono"
-# family = "CaskaydiaCove Nerd Font"
-# style = "Bold"
+# ================================================
+# Custom Keyboard Bindings
+# ================================================
+# These bindings likely integrate with tmux or other terminal multiplexers
+# The escape sequences (\u001B) send specific key combinations to the shell
 
-# [font.italic]
-# family = "CaskaydiaCove Nerd Font"
-# # family = "MesloLGS Nerd Font Mono"
-# style = "Italic"
-
+# Command+A: Send ESC+m sequence (typically tmux prefix + command)
 [[keyboard.bindings]]
 chars = "\u001Bm"
 key = "A"
 mods = "Command"
 
+# Command+Period: Send ESC+. sequence (commonly used for argument completion)
 [[keyboard.bindings]]
 chars = "\u001B."
 key = "Period"
 mods = "Command"
 
+# Command+D: Send ESC+d sequence (often used for word deletion or tmux detach)
 [[keyboard.bindings]]
 chars = "\u001Bd"
 key = "D"
 mods = "Command"
 
+# Command+B: Send ESC+b sequence (commonly used for backward word navigation)
 [[keyboard.bindings]]
 chars = "\u001Bb"
 key = "B"
 mods = "Command"
 
+# Command+T: Send ESC+t sequence (often used for tmux or tab operations)
 [[keyboard.bindings]]
 chars = "\u001Bt"
 key = "T"
 mods = "Command"
 
+# Command+F: Send ESC+f sequence (commonly used for forward word navigation)
 [[keyboard.bindings]]
 chars = "\u001Bf"
 key = "F"
 mods = "Command"
 
+# Control+N: Send Ctrl+N sequence (typically for next line/command in history)
 [[keyboard.bindings]]
 chars = "\u000E"
 key = "N"
 mods = "Control"
 
+# Control+Space: Toggle Vi mode for text selection and navigation
 [[keyboard.bindings]]
 action = "ToggleViMode"
 key = "Space"
 mods = "Control"
 
 
+# ================================================
+# Window Layout and Spacing
+# ================================================
+
+# Internal padding around the terminal content
 [window.padding]
-x = 8
-y = 8
+x = 8  # Horizontal padding in pixels (left and right margins)
+y = 8  # Vertical padding in pixels (top and bottom margins)
+
+# ================================================
+# Selection and Clipboard Behavior
+# ================================================
 
 [selection]
+# Automatically copy selected text to system clipboard
+# When true, selecting text will immediately copy it without needing Cmd+C
 save_to_clipboard = true
 
-[general]
-live_config_reload = true
-# https://alacritty.org/config-alacritty.html
-import = ["/Users/pawan/.config/alacritty/catppuccin-mocha.toml"]
+# ================================================
+# General Terminal Settings
+# ================================================
 
-# # Colors (Gruvbox dark)
-#
-# # Default colors
-# [colors.primary]
-# # hard contrast background = = '#1d2021'
-# background = '#282828'
-# # soft contrast background = = '#32302f'
-# foreground = '#ebdbb2'
-#
-# # Normal colors
-# [colors.normal]
-# black   = '#282828'
-# red     = '#cc241d'
-# green   = '#98971a'
-# yellow  = '#d79921'
-# blue    = '#458588'
-# magenta = '#b16286'
-# cyan    = '#689d6a'
-# white   = '#a89984'
-#
-# # Bright colors
-# [colors.bright]
-# black   = '#928374'
-# red     = '#fb4934'
-# green   = '#b8bb26'
-# yellow  = '#fabd2f'
-# blue    = '#83a598'
-# magenta = '#d3869b'
-# cyan    = '#8ec07c'
-# white   = '#ebdbb2'
+[general]
+# Enable live configuration reloading - changes to this file take effect immediately
+# without restarting Alacritty
+live_config_reload = true
+
+# Official Alacritty configuration documentation
+# https://alacritty.org/config-alacritty.html
+
+# Import external theme/color configuration files
+# Currently using Catppuccin Mocha theme for colors
+import = ["/Users/pawan/.config/alacritty/catppuccin-mocha.toml"]

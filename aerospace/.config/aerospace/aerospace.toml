@@ -58,6 +58,10 @@ run = 'move-node-to-workspace 2'
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'chrome'
+run = 'move-node-to-workspace 8'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'chromium'
 run = 'move-node-to-workspace 1'
 
 # [[on-window-detected]]

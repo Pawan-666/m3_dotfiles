@@ -11,7 +11,7 @@ map("n", "<Leader>s", ":w<CR>", { desc = "Save file" })
 map("n", "<Leader>q", ":qa!<CR>", { desc = "Quit all" })
 map("n", "<Leader>d", ":bd<CR>", { desc = "Close buffer" })
 map("n", "<Leader>p", "ggVGp", { desc = "Paste over entire file" })
-map("n", "<Leader><Leader>", "<C-^>", { desc = "Switch to previous file" })
+-- map("n", "<Leader><Leader>", "<C-^>", { desc = "Switch to previous file" })
 map("n", "<leader>P", ":lua require('img-clip').paste_image()<CR>", { desc = "Paste Image" })
 
 -- Toggling options
