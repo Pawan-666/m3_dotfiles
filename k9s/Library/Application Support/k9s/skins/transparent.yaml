@@ -1,44 +1,54 @@
 # -----------------------------------------------------------------------------
-# Transparent skin
-# Preserve your terminal session background color
+# Transparent K9s Skin
+# Preserves terminal background color for seamless integration
 # -----------------------------------------------------------------------------
 
-# Skin...
 k9s:
+  # Main application body
   body:
-    bgColor: default
+    bgColor: default               # Use terminal background
+    
+  # Command prompt
   prompt:
     bgColor: default
+    
+  # Info panels
   info:
     sectionColor: default
+    
+  # Dialog boxes
   dialog:
     bgColor: default
     labelFgColor: default
     fieldFgColor: default
+    
+  # Frame elements
   frame:
     crumbs:
-      bgColor: default
+      bgColor: default             # Breadcrumb background
     title:
-      bgColor: default
-      counterColor: default
+      bgColor: default             # Title bar background
+      counterColor: default        # Resource counter color
     menu:
-      fgColor: default
+      fgColor: default             # Menu text color
+      
+  # Different view types
   views:
     charts:
-      bgColor: default
+      bgColor: default             # Chart view background
     table:
-      bgColor: default
+      bgColor: default             # Table view background
       header:
-        fgColor: default
-        bgColor: default
+        fgColor: default           # Table header text
+        bgColor: default           # Table header background
     xray:
-      bgColor: default
+      bgColor: default             # Tree view background
     logs:
-      bgColor: default
+      bgColor: default             # Log view background
       indicator:
-        bgColor: default
-        toggleOnColor: default
-        toggleOffColor: default
+        bgColor: default           # Log indicator background
+        toggleOnColor: default     # Active toggle color
+        toggleOffColor: default    # Inactive toggle color
     yaml:
-      colonColor: default
-      valueColor: default
+      colonColor: default          # YAML colon color
+      valueColor: default          # YAML value color

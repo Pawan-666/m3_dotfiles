@@ -1,37 +1,35 @@
-# Enable Powerlevel9k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
+# Powerlevel10k instant prompt - keep at top for fast startup
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+# Homebrew setup (macOS)
 if [[ -f "/opt/homebrew/bin/brew" ]] then
-  # If you're using macOS, you'll want this enabled
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-# Set the directory we want to store zinit and plugins
+# Zinit plugin manager setup
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 
-# Download Zinit, if it's not there yet
+# Auto-install Zinit if not present
 if [ ! -d "$ZINIT_HOME" ]; then
    mkdir -p "$(dirname $ZINIT_HOME)"
    git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
 fi
 
-# Source/Load zinit
+# Load Zinit
 source "${ZINIT_HOME}/zinit.zsh"
 
-# Add in Powerlevel10k
+# Prompt theme
 zinit ice depth=1; zinit light romkatv/powerlevel10k
 
-# Add in zsh plugins
+# Essential plugins
 zinit light zsh-users/zsh-syntax-highlighting
 zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
 zinit light Aloxaf/fzf-tab
 
-# Add in snippets
+# Oh My Zsh snippets
 zinit snippet OMZL::git.zsh
 zinit snippet OMZP::git
 zinit snippet OMZP::sudo
@@ -41,41 +39,34 @@ zinit snippet OMZP::kubectl
 zinit snippet OMZP::kubectx
 zinit snippet OMZP::command-not-found
 
-# Load completions
+# Initialize completions
 autoload -Uz compinit && compinit
-
 zinit cdreplay -q
 
-# export EDITOR=lvim
+# Editor configuration
 export EDITOR=nvim
-#### new addition
-# Enable Ctrl+X Ctrl+E to edit command line in $EDITOR
-# autoload -U edit-command-line
-# zle -N edit-command-line
-# bindkey '^X^E' edit-command-line
 
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+# Powerlevel10k configuration
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# Keybindings
+# Key bindings (emacs mode)
 bindkey -e
-bindkey '^p' history-search-backward
-bindkey '^n' history-search-forward
-bindkey '^[w' kill-region
+bindkey '^p' history-search-backward   # Ctrl+P for previous command
+bindkey '^n' history-search-forward    # Ctrl+N for next command
+bindkey '^[w' kill-region              # Alt+W to kill region
 
-# History
+# History configuration
 HISTSIZE=5000
 HISTFILE=~/.zsh_history
 SAVEHIST=$HISTSIZE
 HISTDUP=erase
-setopt appendhistory
-setopt sharehistory
-setopt hist_ignore_space
-setopt hist_ignore_all_dups
-setopt hist_save_no_dups
-setopt hist_ignore_dups
-setopt hist_find_no_dups
+setopt appendhistory          # Append to history file
+setopt sharehistory          # Share history between sessions
+setopt hist_ignore_space     # Ignore commands starting with space
+setopt hist_ignore_all_dups  # Remove all duplicate entries
+setopt hist_save_no_dups     # Don't save duplicates
+setopt hist_ignore_dups      # Don't record duplicate entries
+setopt hist_find_no_dups     # Don't display duplicates in search
 
 # Completion styling
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
@@ -117,40 +108,32 @@ function yy() {
 	rm -f -- "$tmp"
 }
 
-# venv() {
-#     python3 -m venv venv && . venv/bin/activate && python3 -m pip install --upgrade pip &> /dev/null
-# }
-
+# Python environment management
 penv() {
-pyenv virtualenv 3.13.0 $(basename $(pwd)) && pyenv local $(basename $(pwd))
+    pyenv virtualenv 3.13.0 $(basename $(pwd)) && pyenv local $(basename $(pwd))
 }
 
+# Pyenv initialization
 eval "$(pyenv init -)"
 if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
 
-
-mkdircd ()
-{
-    mkdir -p -- "$1" &&
-       cd -P -- "$1"
+# Utility functions
+mkdircd() {
+    mkdir -p -- "$1" && cd -P -- "$1"
 }
 
+# UI improvements
+export PROMPT_EOL_MARK=""           # Hide EOL sign ('%')
+bindkey -s '^t' '^uyy\n'           # Ctrl+T opens yazi
 
-# hide EOL sign ('%')
-export PROMPT_EOL_MARK=""
-
-bindkey -s '^t' '^uyy\n'
-
+# Node Version Manager
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
-# if [[ -n "$TMUX" ]]; then
-#     source ~/.zshrc
-# fi
-
+# Tmux-specific configuration
 if [[ -n "$TMUX" ]]; then
     autoload -U edit-command-line
     zle -N edit-command-line
-    bindkey '^X^E' edit-command-line
+    bindkey '^X^E' edit-command-line    # Ctrl+X Ctrl+E to edit command line
 fi

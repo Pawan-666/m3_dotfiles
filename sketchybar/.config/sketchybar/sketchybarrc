@@ -1,56 +1,32 @@
 #!/bin/sh
 
+# Sketchybar configuration - Minimal setup
+
+# Bar appearance
 bar=(
-  color=0xff000000
-  # color=0xff2e2f3a        # catpucin
-  height=35
-  sticky=on
-  padding_left=7
-  padding_right=7
+  color=0xff000000         # Black background
+  height=35               # Bar height in pixels
+  sticky=on               # Show on all spaces
+  padding_left=7          # Left padding
+  padding_right=7         # Right padding
 )
 
+# Default item styling
 default=(
-  icon.drawing=off
-  label.padding_left=4
-  label.padding_right=4
-  label.color=0xffcad3f5
+  icon.drawing=off         # Hide icons by default
+  label.padding_left=4     # Label left padding
+  label.padding_right=4    # Label right padding
+  label.color=0xffcad3f5   # Catppuccin text color
 )
 
+# Apply configuration
 sketchybar \
   --bar "${bar[@]}" \
   --default "${default[@]}"
 
-# sketchybar \
-#   --add item space left \
-#   --set space script='sketchybar --set $NAME label="[$(echo "$INFO" | jq .[])]"'\
-#   --subscribe space space_change
-
-
-# sketchybar \
-#   --add item app_name left \
-#   --set app_name script='sketchybar --set $NAME label="$USER::$INFO"' \
-#   --subscribe app_name front_app_switched
-
-# sketchybar \
-#   --add item nepdate right \
-#   --set nepdate script='sketchybar --set $NAME label="$(nepcal date)"' \
-#              update_freq=300 \
-#   --subscribe nepdate system_woke
-
-# sketchybar \
-#   --add item time right \
-#   --set time script='sketchybar --set $NAME label="$(date "+%H:%M")"' \
-#              update_freq=30 \
-#   --subscribe time system_woke
-
-
-
-# sketchybar \
-#   --add item ip right \
-#   --set ip script='sketchybar --set $NAME label="/$(ipconfig getifaddr en0)/"'\
-#   --subscribe ip wifi_change
-
+# Update the bar
 sketchybar --update
 
+# Installation note:
 # brew tap FelixKratz/formulae
 # brew install sketchybar

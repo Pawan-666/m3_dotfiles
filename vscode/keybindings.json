@@ -1,4 +1,5 @@
 [
+  // Space-based leader key bindings
   {
     "key": "space space",
     "command": "workbench.action.quickOpenPreviousEditor",
@@ -56,65 +57,65 @@
     "command": "workbench.action.closeActiveEditor",
     "when": "vim.mode == 'Normal' && editorTextFocus"
   },
-// Place your key bindings in this file to override the defaults
-
-{
-  "command": "workbench.action.nextEditorInGroup",
-  "key": "ctrl-j",
-  "when": "(vim.mode == 'Normal' || vim.mode == 'Visual') && (editorTextFocus || !inputFocus)"
-},
-{
-  "command": "workbench.action.previousEditorInGroup",
-  "key": "ctrl-k",
-  "when": "(vim.mode == 'Normal' || vim.mode == 'Visual') && (editorTextFocus || !inputFocus)"
-},
-// Coding
-{
-  "command": "editor.action.moveLinesDownAction",
-  "key": "shift-j",
-  "when": "vim.mode == 'VisualLine' && editorTextFocus"
-},
-// File Explorer
-{
-  "command": "renameFile",
-  "key": "r",
-  "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
-},
-{
-  "command": "filesExplorer.copy",
-  "key": "y",
-  "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
-},
-{
-  "command": "filesExplorer.paste",
-  "key": "p",
-  "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
-},
-{
-  "command": "filesExplorer.cut",
-  "key": "x",
-  "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
-},
-{
-  "command": "deleteFile",
-  "key": "d",
-  "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
-},
-{
-  "command": "explorer.newFile",
-  "key": "a",
-  "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
-},
-{
-  "command": "explorer.newFolder",
-  "key": "shift-a",
-  "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
-},
-{
-  "command": "explorer.openToSide",
-  "key": "s",
-  "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
-},
+  // Editor navigation
+  {
+    "command": "workbench.action.nextEditorInGroup",
+    "key": "ctrl-j",
+    "when": "(vim.mode == 'Normal' || vim.mode == 'Visual') && (editorTextFocus || !inputFocus)"
+  },
+  {
+    "command": "workbench.action.previousEditorInGroup",
+    "key": "ctrl-k",
+    "when": "(vim.mode == 'Normal' || vim.mode == 'Visual') && (editorTextFocus || !inputFocus)"
+  },
+  
+  // Code editing
+  {
+    "command": "editor.action.moveLinesDownAction",
+    "key": "shift-j",
+    "when": "vim.mode == 'VisualLine' && editorTextFocus"
+  },
+  // File Explorer navigation (vim-like)
+  {
+    "command": "renameFile",
+    "key": "r",
+    "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
+  },
+  {
+    "command": "filesExplorer.copy",
+    "key": "y",
+    "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
+  },
+  {
+    "command": "filesExplorer.paste",
+    "key": "p",
+    "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
+  },
+  {
+    "command": "filesExplorer.cut",
+    "key": "x",
+    "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
+  },
+  {
+    "command": "deleteFile",
+    "key": "d",
+    "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
+  },
+  {
+    "command": "explorer.newFile",
+    "key": "a",
+    "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
+  },
+  {
+    "command": "explorer.newFolder",
+    "key": "shift-a",
+    "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
+  },
+  {
+    "command": "explorer.openToSide",
+    "key": "s",
+    "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
+  },
 {
   "args": {
     "commands": [

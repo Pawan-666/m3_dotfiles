@@ -1,35 +1,27 @@
-# start-at-login = true
+# Don't start AeroSpace automatically on login
 start-at-login = false
 
-# Normalizations. See: https://nikitabobko.github.io/AeroSpace/guide#normalization
+# Normalization rules to improve layout behavior
 enable-normalization-flatten-containers = true
 enable-normalization-opposite-orientation-for-nested-containers = true
 
+# Padding for accordion layout mode
 accordion-padding = 40
 
-# default-root-container-layout = 'tiles'
+# Default layout for new workspaces
 default-root-container-layout = 'accordion'
 
+# Automatic orientation based on container size
 default-root-container-orientation = 'auto'
 
+# Mouse follows focus behavior
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 on-focus-changed = ['move-mouse window-lazy-center']
-# automatically-unhide-macos-hidden-apps = true
-# automatically-unhide-macos-hidden-apps = false
 
-# [[on-window-detected]]
-# if.app-id = 'com.apple.systempreferences'
-# if.app-name-regex-substring = 'settings'
-# if.window-title-regex-substring = 'substring'
-# if.workspace = 'workspace-name'
-# if.during-aerospace-startup = true
-# check-further-callbacks = true
-# run = ['layout floating', 'move-node-to-workspace S']  # The callback itself
 
-# [[on-window-detected]]
-# if.app-name-regex-substring = 'telegram'
-# run = 'layout floating'
 
+
+# Floating window rules for utility apps
 [[on-window-detected]]
 if.app-name-regex-substring = 'keycastr'
 run = 'layout floating'
@@ -42,10 +34,9 @@ run = 'layout floating'
 if.app-name-regex-substring = 'shottr'
 run = 'layout floating'
 
-
+# Terminal applications → Workspace 2
 [[on-window-detected]]
 if.app-id = 'org.alacritty'
-# run = 'layout floating'
 run = "move-node-to-workspace 2"
 
 [[on-window-detected]]
@@ -56,6 +47,7 @@ run = 'move-node-to-workspace 2'
 if.app-name-regex-substring = 'WezTerm'
 run = 'move-node-to-workspace 2'
 
+# Browser applications
 [[on-window-detected]]
 if.app-name-regex-substring = 'chrome'
 run = 'move-node-to-workspace 8'
@@ -63,19 +55,6 @@ run = 'move-node-to-workspace 8'
 [[on-window-detected]]
 if.app-name-regex-substring = 'chromium'
 run = 'move-node-to-workspace 1'
-
-# [[on-window-detected]]
-# if.app-name-regex-substring = 'remote'
-# run = 'move-node-to-workspace r'
-
-
-[[on-window-detected]]
-if.app-name-regex-substring = 'whatsapp'
-run = ['layout floating', 'move-node-to-workspace 6']  # The callback itself
-
-[[on-window-detected]]
-if.app-name-regex-substring = 'Obsidian'
-run = 'move-node-to-workspace 7'
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'Brave'
@@ -85,20 +64,27 @@ run = 'move-node-to-workspace 9'
 if.app-name-regex-substring = 'firefox'
 run = 'move-node-to-workspace 9'
 
+# Communication apps
+[[on-window-detected]]
+if.app-name-regex-substring = 'whatsapp'
+run = ['layout floating', 'move-node-to-workspace 6']
+
+# Note-taking and productivity
+[[on-window-detected]]
+if.app-name-regex-substring = 'Obsidian'
+run = 'move-node-to-workspace 7'
+
 [[on-window-detected]]
 if.app-id = 'com.thenounproject.Noun-Project'
 run = "layout floating"
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'cisco'
-# run = 'layout floating'
-run = ['layout floating', 'move-node-to-workspace 5']  # The callback itself
+run = ['layout floating', 'move-node-to-workspace 5']
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'teams'
-# run = 'layout floating'
-run = ['layout floating', 'move-node-to-workspace 4']  # The callback itself
-# run = "move-node-to-workspace 4"
+run = ['layout floating', 'move-node-to-workspace 4']
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'postman'
@@ -106,9 +92,7 @@ run = 'move-node-to-workspace 6'
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'slack'
-# run = "move-node-to-workspace 3"
-run = ['layout floating', 'move-node-to-workspace 3']  # The callback itself
-# run = 'layout floating'
+run = ['layout floating', 'move-node-to-workspace 3']
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'finder'
@@ -116,33 +100,27 @@ run = 'layout floating'
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'outlook'
-run = 'move-node-to-workspace 5'  # The callback itself
+run = 'move-node-to-workspace 5'
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'viber'
-# run = "move-node-to-workspace 3"
-# run = ['layout floating', 'move-node-to-workspace v']  # The callback itself
 run = 'layout floating'
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'telegram'
-# run = ['layout floating', 'move-node-to-workspace t']  # The callback itself
 run = 'layout floating'
 
 [[on-window-detected]]
 if.app-name-regex-substring = 'stremio'
-# run = 'move-node-to-workspace s'  # The callback itself
 run = 'layout floating'
 
-# [[on-window-detected]]
-# if.app-name-regex-substring = 'whatsapp'
-# # run = ['layout floating', 'move-node-to-workspace w']  # The callback itself
-# run = 'layout floating'
+
 
 
 [key-mapping]
 preset = 'qwerty'
 
+# Window gaps configuration
 [gaps]
 inner.horizontal = 8
 inner.vertical =   6
@@ -153,39 +131,27 @@ outer.right =      2
 
 [mode.main.binding]
 cmd-shift-f = 'fullscreen'
-# cmd-ctrl-f = 'fullscreen'
-# alt-shift-p = 'layout floating'
-# cmd-ctrl-p = 'layout floating'
 
-# See: https://nikitabobko.github.io/AeroSpace/commands#layout
-# alt-slash = 'layout tiles horizontal vertical'
-# alt-comma = 'layout accordion horizontal vertical'
 cmd-slash = 'layout tiles horizontal vertical'
 cmd-comma = 'layout accordion horizontal vertical'
-# See: https://nikitabobko.github.io/AeroSpace/commands#focus
+# Window focus navigation (vim-like)
 alt-h = 'focus left'
 alt-j = 'focus down'
 alt-k = 'focus up'
 alt-l = 'focus right'
 
-# See: https://nikitabobko.github.io/AeroSpace/commands#move
+# Window movement
 cmd-ctrl-h = 'move left'
 cmd-ctrl-j = 'move down'
 cmd-ctrl-k = 'move up'
 cmd-ctrl-l = 'move right'
 
-# alt-shift-h = 'move left'
-# alt-shift-j = 'move down'
-# alt-shift-k = 'move up'
-# alt-shift-l = 'move right'
-# See: https://nikitabobko.github.io/AeroSpace/commands#resize
+# Window resizing
 cmd-ctrl-minus = 'resize smart -64'
 cmd-ctrl-equal = 'resize smart +64'
-# alt-shift-minus = 'resize smart -50'
-# alt-shift-equal = 'resize smart +50'
 
 
-# See: https://nikitabobko.github.io/AeroSpace/commands#workspace
+# Workspace navigation
 cmd-1 = 'workspace 1'
 cmd-2 = 'workspace 2'
 cmd-3 = 'workspace 3'
@@ -195,13 +161,8 @@ cmd-6 = 'workspace 6'
 cmd-7 = 'workspace 7'
 cmd-8 = 'workspace 8'
 cmd-9 = 'workspace 9'
-# alt-t = 'workspace t'
-# alt-v = 'workspace v'
-# # alt-s = 'workspace s'
-# alt-w = 'workspace w'
-# # cmd-1 = 'workspace 1'
 
-# See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
+# Move windows to workspaces and follow focus
 cmd-ctrl-1 = 'move-node-to-workspace 1 --focus-follows-window'
 cmd-ctrl-2 = 'move-node-to-workspace 2 --focus-follows-window'
 cmd-ctrl-3 = 'move-node-to-workspace 3 --focus-follows-window'
@@ -211,32 +172,17 @@ cmd-ctrl-6 = 'move-node-to-workspace 6 --focus-follows-window'
 cmd-ctrl-7 = 'move-node-to-workspace 7 --focus-follows-window'
 cmd-ctrl-8 = 'move-node-to-workspace 8 --focus-follows-window'
 cmd-ctrl-9 = 'move-node-to-workspace 9 --focus-follows-window'
-# cmd-ctrl-t = 'move-node-to-workspace t --focus-follows-window'
-# cmd-ctrl-v = 'move-node-to-workspace v --focus-follows-window'
-# # cmd-ctrl-s = 'move-node-to-workspace s --focus-follows-window'
-# cmd-ctrl-w = 'move-node-to-workspace w --focus-follows-window'
 
+# Workspace utilities
 alt-tab = 'workspace-back-and-forth'
-# alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
 
-# See: https://nikitabobko.github.io/AeroSpace/commands#mode
-# alt-shift-semicolon = 'mode service'
+# Enter service mode for advanced operations
 cmd-ctrl-semicolon = 'mode service'
-# alt-shift-enter = 'mode apps'
-# cmd-ctrl-enter = 'mode apps'
 
 [workspace-to-monitor-force-assignment]
-# 1 = 'main'
-# 2 = ['secondary', 'main']
-# 3 = ['secondary', 'main']
-# 4 = ['secondary', 'main']
-# 5 = ['secondary', 'main']
-# 6 = ['secondary', 'main']
-# 7 = ['secondary', 'main']
-# 8 = ['secondary', 'main']
-# 9 = ['secondary', 'main']
-# r = ['secondary', 'main']
-
+# Force workspace assignment to specific monitors
+# Workspace 1 tries secondary monitor first, falls back to main
+# All other workspaces prefer main monitor
 1 = ['secondary', 'main']
 2 = 'main'
 3 = 'main'
@@ -248,35 +194,12 @@ cmd-ctrl-semicolon = 'mode service'
 9 = 'main'
 r = 'main'
 
-# 2 = 'main'
-# 3 = 'main'
-# 4 = 'main'
-# 5 = 'main'
-# 6 = 'main'
-# 7 = 'main'
-# 8 = 'main'
-# 9 = 'main'
-# r = 'main'
-
-# 'service' binding mode declaration.
-# See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
+# Service mode for advanced operations
 [mode.service.binding]
-esc = ['reload-config', 'mode main']          # aerospace reload-config
-r = ['flatten-workspace-tree', 'mode main'] # reset layout
-f = ['layout floating tiling', 'mode main'] # Toggle between floating and tiling layout
-backspace = ['close-all-windows-but-current', 'mode main']
+esc = ['reload-config', 'mode main']          # Reload config and exit service mode
+r = ['flatten-workspace-tree', 'mode main']   # Reset layout to default
+f = ['layout floating tiling', 'mode main']   # Toggle between floating and tiling
+backspace = ['close-all-windows-but-current', 'mode main']  # Close all except current
 
-# alt-ctrl-h = ['join-with left', 'mode main']
-# alt-ctrl-j = ['join-with down', 'mode main']
-# alt-ctrl-k = ['join-with up', 'mode main']
+# Join windows with containers
 alt-ctrl-l = ['join-with right', 'mode main']
-
-# alt-shift-h = ['join-with left', 'mode main']
-# alt-shift-j = ['join-with down', 'mode main']
-# alt-shift-k = ['join-with up', 'mode main']
-# alt-shift-l = ['join-with right', 'mode main']
-# [mode.apps.binding]
-# alt-w = ['exec-and-forget open -a /Applications/WezTerm.app', 'mode main']
-
-# ❯ aerospace list-apps
-# ❯brew services restart borders

@@ -1,43 +1,59 @@
 k9s:
-  liveViewAutoRefresh: false
+  # View refresh settings
+  liveViewAutoRefresh: false         # Disable auto-refresh for better performance
+  refreshRate: 2                     # Refresh rate in seconds
+  
+  # File paths
   screenDumpDir: /Users/pawanchhetri/Library/Application Support/k9s/screen-dumps
-  refreshRate: 2
-  maxConnRetry: 5
-  readOnly: false
-  noExitOnCtrlC: false
+  
+  # Connection settings
+  maxConnRetry: 5                    # Max retry attempts for cluster connection
+  readOnly: false                    # Allow modifications
+  noExitOnCtrlC: false              # Allow Ctrl+C to exit
+  
+  # UI configuration
   ui:
-    enableMouse: false
-    headless: false
-    logoless: false
-    crumbsless: false
-    reactive: false
-    noIcons: false
-    defaultsToFullScreen: false
-    skin: transparent # => All clusters will use this skin unless otherwise specified in the context configuration file
+    enableMouse: false               # Disable mouse support
+    headless: false                  # Show UI
+    logoless: false                  # Show k9s logo
+    crumbsless: false               # Show breadcrumbs
+    reactive: false                  # Disable reactive mode
+    noIcons: false                   # Show icons
+    defaultsToFullScreen: false      # Don't start in fullscreen
+    skin: transparent               # Use transparent theme
 
-  skipLatestRevCheck: false
-  disablePodCounting: false
+  # Updates and features
+  skipLatestRevCheck: false          # Check for updates
+  disablePodCounting: false         # Enable pod counting
+  
+  # Shell pod configuration for exec operations
   shellPod:
-    image: busybox:1.35.0
-    namespace: default
+    image: busybox:1.35.0           # Default shell image
+    namespace: default               # Default namespace
     limits:
-      cpu: 100m
-      memory: 100Mi
+      cpu: 100m                     # CPU limit for shell pods
+      memory: 100Mi                 # Memory limit for shell pods
+  
+  # Image scanning (disabled)
   imageScans:
     enable: false
     exclusions:
       namespaces: []
       labels: {}
+  
+  # Log viewing settings
   logger:
-    tail: 100
-    buffer: 5000
-    sinceSeconds: -1
-    textWrap: false
-    showTime: false
+    tail: 100                       # Number of log lines to tail
+    buffer: 5000                    # Log buffer size
+    sinceSeconds: -1                # Show all logs
+    textWrap: false                 # Don't wrap long lines
+    showTime: false                 # Hide timestamps
+  
+  # Resource usage thresholds
   thresholds:
     cpu:
-      critical: 90
-      warn: 70
+      critical: 90                  # CPU critical threshold (%)
+      warn: 70                      # CPU warning threshold (%)
     memory:
-      critical: 90
-      warn: 70
+      critical: 90                  # Memory critical threshold (%)
+      warn: 70                      # Memory warning threshold (%)

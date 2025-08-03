@@ -1,34 +1,41 @@
-# A TOML linter such as https://taplo.tamasfe.dev/ can use this schema to validate your config.
-# If you encounter any issues, please make an issue at https://github.com/yazi-rs/schemas.
+# Schema validation for TOML linting
 "$schema" = "https://yazi-rs.github.io/schemas/yazi.json"
 
 [mgr]
-ratio          = [ 1, 4, 3 ]
-sort_by        = "alphabetical"
-sort_sensitive = false
-sort_reverse 	 = false
-sort_dir_first = true
-sort_translit  = false
-# linemode       = "none"
-linemode = "size_and_mtime"
-# show_hidden    = false
-show_hidden    = true
-show_symlink   = true
-scrolloff      = 5
-mouse_events   = [ "click", "scroll" ]
-title_format   = "Yazi: {cwd}"
+# Layout configuration
+ratio          = [ 1, 4, 3 ]       # Sidebar:Main:Preview panel ratios
+scrolloff      = 5                 # Keep 5 lines visible when scrolling
+mouse_events   = [ "click", "scroll" ]  # Enable mouse support
+title_format   = "Yazi: {cwd}"     # Window title format
+
+# File sorting
+sort_by        = "alphabetical"    # Sort files alphabetically
+sort_sensitive = false             # Case insensitive sorting
+sort_reverse   = false             # Normal sort order (A-Z)
+sort_dir_first = true              # Show directories first
+sort_translit  = false             # No transliteration
+
+# Display options
+linemode       = "size_and_mtime"  # Show file size and modification time
+show_hidden    = true              # Show hidden files by default
+show_symlink   = true              # Show symbolic links
 
 [preview]
-wrap            = "no"
-tab_size        = 2
-max_width       = 600
-max_height      = 900
-cache_dir       = ""
-image_delay     = 30
-image_filter    = "triangle"
-image_quality   = 75
-ueberzug_scale  = 1
-ueberzug_offset = [ 0, 0, 0, 0 ]
+# Text preview settings
+wrap            = "no"             # Don't wrap long lines
+tab_size        = 2                # Tab size for code preview
+
+# Preview window limits
+max_width       = 600              # Maximum preview width
+max_height      = 900              # Maximum preview height
+
+# Image preview settings
+cache_dir       = ""               # Use default cache directory
+image_delay     = 30               # Image loading delay (ms)
+image_filter    = "triangle"       # Image scaling filter
+image_quality   = 75               # Image quality (1-100)
+ueberzug_scale  = 1                # Ueberzug scaling factor
+ueberzug_offset = [ 0, 0, 0, 0 ]   # Ueberzug position offset
 
 [opener]
 edit = [
