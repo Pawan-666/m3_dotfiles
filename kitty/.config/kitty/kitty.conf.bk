@@ -1,0 +1,92 @@
+# ================================================
+# Kitty Terminal Configuration
+# ================================================
+
+# ===============================
+# Window & Appearance
+# ===============================
+
+# Slight transparency
+background_opacity 0.9
+
+# Remove title bar decorations (only works on macOS or compatible WMs)
+hide_window_decorations yes
+
+# Internal padding (horizontal vertical)
+padding 18 18
+
+# ===============================
+# Font Configuration
+# ===============================
+
+# Font family and size
+font_family JetBrainsMono Nerd Font
+bold_font JetBrainsMono Nerd Font
+italic_font JetBrainsMono Nerd Font
+bold_italic_font JetBrainsMono Nerd Font
+
+# Font size
+font_size 20.0
+
+# Use a light font weight for normal text
+# Valid weights: thin, extra_light, light, normal, medium, bold, heavy
+# font_weight light
+font_weight thin
+
+# ===============================
+# Clipboard & Selection
+# ===============================
+
+# Auto-copy selected text to clipboard
+copy_on_select yes
+
+# ===============================
+# Live Config Reload
+# ===============================
+
+# Enabled by default in kitty – nothing needed here
+
+# ===============================
+# Theme Import (Catppuccin Mocha)
+# ===============================
+
+include ~/.config/kitty/catppuccin-mocha.conf
+
+# You can get Catppuccin themes here:
+# https://github.com/catppuccin/kitty
+# Just place the desired file in ~/.config/kitty/
+
+# ===============================
+# Keybindings (Command/Control)
+# ===============================
+
+# macOS-specific: "macos_cmd" means Command key
+
+
+map cmd+a send_text all \x1bm
+map cmd+. send_text all \x1b.
+map cmd+d send_text all \x1bd
+map cmd+b send_text all \x1bb
+map cmd+t send_text all \x1bt
+map cmd+f send_text all \x1bf
+
+map ctrl+n send_text all \x0e
+# Reload Kitty configuration
+map ctrl+r reload_config
+# map ctrl+space toggle_selection
+
+# ===============================
+# Vi-like scrollback & hints (Alacritty-style)
+# ===============================
+
+# Open scrollback in a new horizontal tmux pane with Neovim (vi navigation)
+# - q to quit Neovim and return to tmux
+# - System clipboard enabled for yanks
+map ctrl+space pipe @screen_scrollback overlay nvim - -c 'set ft=scrollback clipboard+=unnamedplus' -c 'nnoremap <buffer> q :qa!<CR>'
+
+# ===============================
+# Notes
+# ===============================
+# Kitty docs: https://sw.kovidgoyal.net/kitty/conf/
+# Key bindings: https://sw.kovidgoyal.net/kitty/keyboard-protocol/
+# ================================================

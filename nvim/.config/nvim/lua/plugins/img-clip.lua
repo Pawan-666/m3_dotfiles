@@ -3,8 +3,8 @@ return {
   event = "VeryLazy",
   opts = {
     default = {
-      dir_path = vim.fn.expand("~/wiki/my_blog/blog_site/static/images"),
-      -- dir_path = "/Users/pawan/obsidian_pawan/images",
+      -- dir_path = vim.fn.expand("~/wiki/my_blog/blog_site/static/images"),
+      dir_path = "/Users/pawan/obsidian_pawan/images",
       file_name = "%Y-%m-%d-%H-%M-%S", -- string, not boolean
       process_cmd = "convert - -set gamma 0.4545 -",
     },

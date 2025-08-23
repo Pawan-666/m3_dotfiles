@@ -10,8 +10,19 @@ TERM = "alacritty"
 
 # Font configuration
 [font]
+# Alternative font sizes (commented out)
+# size = 18.0
+
 # Current font size in points - controls overall text size in the terminal
 size = 20.0
+
+# Shell configuration (currently disabled)
+# Uncomment this section to customize the shell that Alacritty launches
+# [shell]
+# program = "/bin/zsh"
+# # The 2 commands after login are needed to automatically attach to an existing tmux session
+# # If no session exists, a new one is created
+# args = ["--login", "-c", "/opt/homebrew/bin/tmux attach || //opt/homebrew/bin/tmux"]
 
 # Window appearance settings
 [window]
@@ -20,13 +31,36 @@ size = 20.0
 decorations = "buttonless"
 
 # Window transparency/opacity settings (0.0 = fully transparent, 1.0 = fully opaque)
+# opacity = 0.99  # Almost opaque
 opacity = 0.9     # Current setting - slightly transparent
+# opacity = 0.8   # More transparent
+# opacity = 0.7   # Very transparent
 
 # Normal font family and style configuration
 [font.normal]
+# Alternative font families (commented out for reference)
+# family = "Hack Nerd Font"
+# style = "Regular"
+# family = "MesloLGS Nerd Font Mono"
+# family = "CaskaydiaCove Nerd Font"
+
 # Current font configuration
 family = "JetBrainsMono Nerd Font"  # Font family with programming ligatures and icons
 style = "Light"                     # Font weight/style
+
+# Bold font configuration (currently disabled)
+# Uncomment to customize bold text appearance
+# [font.bold]
+# # family = "MesloLGS Nerd Font Mono"
+# family = "CaskaydiaCove Nerd Font"
+# style = "Bold"
+
+# Italic font configuration (currently disabled)
+# Uncomment to customize italic text appearance
+# [font.italic]
+# family = "CaskaydiaCove Nerd Font"
+# # family = "MesloLGS Nerd Font Mono"
+# style = "Italic"
 
 # ================================================
 # Custom Keyboard Bindings
@@ -116,3 +150,40 @@ live_config_reload = true
 # Import external theme/color configuration files
 # Currently using Catppuccin Mocha theme for colors
 import = ["/Users/pawan/.config/alacritty/catppuccin-mocha.toml"]
+
+# ================================================
+# Alternative Color Scheme: Gruvbox Dark (Disabled)
+# ================================================
+# This is an alternative color scheme that can be enabled by uncommenting
+# Remove the import line above and uncomment this section to use Gruvbox colors
+
+# # Colors (Gruvbox dark)
+#
+# # Default colors
+# [colors.primary]
+# # hard contrast background = = '#1d2021'
+# background = '#282828'    # Main background color - warm dark gray
+# # soft contrast background = = '#32302f'
+# foreground = '#ebdbb2'    # Main text color - warm light beige
+#
+# # Normal colors (standard 8 colors)
+# [colors.normal]
+# black   = '#282828'    # Dark gray (matches background)
+# red     = '#cc241d'    # Dark red
+# green   = '#98971a'    # Dark green
+# yellow  = '#d79921'    # Dark yellow/orange
+# blue    = '#458588'    # Dark blue
+# magenta = '#b16286'    # Dark purple/magenta
+# cyan    = '#689d6a'    # Dark teal/cyan
+# white   = '#a89984'    # Light gray
+#
+# # Bright colors (bold/highlighted versions of the 8 colors)
+# [colors.bright]
+# black   = '#928374'    # Medium gray
+# red     = '#fb4934'    # Bright red
+# green   = '#b8bb26'    # Bright green
+# yellow  = '#fabd2f'    # Bright yellow
+# blue    = '#83a598'    # Bright blue
+# magenta = '#d3869b'    # Bright purple/magenta
+# cyan    = '#8ec07c'    # Bright teal/cyan
+# white   = '#ebdbb2'    # Warm white (matches foreground)

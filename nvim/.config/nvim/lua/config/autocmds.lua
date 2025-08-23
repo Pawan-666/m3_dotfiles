@@ -11,7 +11,8 @@ vim.api.nvim_create_autocmd("BufNewFile", {
   callback = function()
     local filename = vim.fn.expand("%:t:r")
     local date = os.date("%Y-%m-%d")
-    local template = string.format([[
+    local template = string.format(
+      [[
 ---
 title: "%s"
 date: %s
@@ -21,12 +22,69 @@ tags: []
 
 # %s
 
-]], filename:gsub("-", " "):gsub("_", " "), date, filename:gsub("-", " "):gsub("_", " "))
-    
+]],
+      filename:gsub("-", " "):gsub("_", " "),
+      date,
+      filename:gsub("-", " "):gsub("_", " ")
+    )
+
     vim.api.nvim_buf_set_lines(0, 0, 0, false, vim.split(template, "\n"))
-    vim.api.nvim_win_set_cursor(0, {7, 0}) -- Position cursor after title
+    vim.api.nvim_win_set_cursor(0, { 7, 0 }) -- Position cursor after title
   end,
 })
+
+-- -- Close Outline when the last Markdown window/buffer is closed
+-- local function close_outline_windows()
+--   -- Try the plugin command first if available
+--   pcall(vim.cmd, "OutlineClose")
+--   -- Fallback: close any window whose buffer filetype looks like Outline
+--   for _, win in ipairs(vim.api.nvim_list_wins()) do
+--     local buf = vim.api.nvim_win_get_buf(win)
+--     local ft = vim.bo[buf].filetype
+--     if ft == "Outline" or ft == "outline" then
+--       pcall(vim.api.nvim_win_close, win, true)
+--     end
+--   end
+-- end
+--
+-- local function any_markdown_windows_visible()
+--   for _, win in ipairs(vim.api.nvim_list_wins()) do
+--     local buf = vim.api.nvim_win_get_buf(win)
+--     if vim.bo[buf].filetype == "markdown" then
+--       return true
+--     end
+--   end
+--   return false
+-- end
+--
+-- local function any_loaded_markdown_buffers()
+--   for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+--     if vim.api.nvim_buf_is_loaded(buf) and vim.bo[buf].filetype == "markdown" then
+--       return true
+--     end
+--   end
+--   return false
+-- end
+--
+-- -- When leaving a Markdown window, if no Markdown windows remain, close Outline
+-- vim.api.nvim_create_autocmd("BufWinLeave", {
+--   pattern = { "*.md" },
+--   callback = function()
+--     if not any_markdown_windows_visible() then
+--       close_outline_windows()
+--     end
+--   end,
+-- })
+--
+-- -- When deleting a Markdown buffer, if no Markdown buffers remain, close Outline
+-- vim.api.nvim_create_autocmd("BufDelete", {
+--   pattern = { "*.md" },
+--   callback = function()
+--     if not any_loaded_markdown_buffers() then
+--       close_outline_windows()
+--     end
+--   end,
+-- })
 
 -- ════════════════════════════════════════════════════════════════
 -- 💾 SMART AUTO-SAVE ENHANCEMENTS
@@ -125,11 +183,36 @@ vim.api.nvim_create_autocmd("VimResized", {
 -- Close some filetypes with <q>
 vim.api.nvim_create_autocmd("FileType", {
   pattern = {
-    "help", "startuptime", "qf", "lspinfo", "man", "checkhealth",
-    "dbout", "gitsigns.blame", "null-ls-info", "DressingSelect"
+    "help",
+    "startuptime",
+    "qf",
+    "lspinfo",
+    "man",
+    "checkhealth",
+    "dbout",
+    "gitsigns.blame",
+    "null-ls-info",
+    "DressingSelect",
   },
   callback = function(event)
     vim.bo[event.buf].buflisted = false
     vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
   end,
 })
+
+-- -- Auto-open outline for Markdown files
+-- vim.api.nvim_create_autocmd("FileType", {
+--   pattern = { "markdown" },
+--   callback = function()
+--     -- Avoid opening multiple times for the same buffer
+--     if vim.b._outline_opened then
+--       return
+--     end
+--     vim.b._outline_opened = true
+--     -- Use pcall to avoid errors if plugin not loaded yet
+--     pcall(function()
+--       -- Prefer focusing main window and opening outline on the left
+--       vim.cmd("OutlineOpen")
+--     end)
+--   end,
+-- })

@@ -12,10 +12,10 @@ font-size = 20
 # macOS specific settings
 macos-titlebar-style = hidden
 confirm-close-surface = false
-quick-terminal-animation-duration = 0.08
+quick-terminal-animation-duration = 0.09
 
 # Transparency and cursor
-background-opacity = 0.8
+background-opacity = 0.9
 cursor-style-blink = true
 
 # Terminal keybindings
@@ -23,7 +23,8 @@ keybind = super+i=inspector:toggle
 keybind = cmd+r=reload_config
 
 # Tmux integration keybindings (send prefix + command)
-keybind = cmd+a=text:\x1bm       # Prefix + m
+#    # Prefix + m
+keybind = cmd+a=text:\x1bm
 keybind = cmd+d=text:\x1bd       # Prefix + d (detach)
 keybind = cmd+b=text:\x1bb       # Prefix + b
 keybind = cmd+t=text:\x1bt       # Prefix + t (new tab)
