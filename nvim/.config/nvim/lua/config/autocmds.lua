@@ -170,6 +170,30 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 })
 
 -- ════════════════════════════════════════════════════════════════
+-- 🗂️  PERSIST FOLDS AND CURSOR (save/load view)
+-- ════════════════════════════════════════════════════════════════
+
+-- Save view (folds/cursor) on write and buffer leave for normal files
+vim.api.nvim_create_autocmd({ "BufWinLeave", "BufWritePost" }, {
+  pattern = "*",
+  callback = function()
+    if vim.bo.buftype == "" and vim.bo.modifiable and vim.fn.expand("%") ~= "" then
+      pcall(vim.cmd, "silent! mkview!")
+    end
+  end,
+})
+
+-- Load view (folds/cursor) when opening readable files
+vim.api.nvim_create_autocmd("BufWinEnter", {
+  pattern = "*",
+  callback = function()
+    if vim.bo.buftype == "" and vim.fn.expand("%") ~= "" and vim.fn.filereadable(vim.fn.expand("%:p")) == 1 then
+      pcall(vim.cmd, "silent! loadview")
+    end
+  end,
+})
+
+-- ════════════════════════════════════════════════════════════════
 -- 🎯 WINDOW MANAGEMENT
 -- ════════════════════════════════════════════════════════════════
 

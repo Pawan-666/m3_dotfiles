@@ -9,13 +9,13 @@
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "markdown", "text" },
   callback = function()
-    vim.opt_local.conceallevel = 0      -- disable conceal in markdown
-    vim.opt_local.wrap = true           -- wrap long lines
-    vim.opt_local.linebreak = true      -- break at word boundaries
-    vim.opt_local.spell = true          -- enable spell check
-    vim.opt_local.spelllang = "en_us"   -- set spell language
-    vim.opt_local.textwidth = 80        -- optimal reading width
-    vim.opt_local.colorcolumn = "80"    -- visual guide
+    vim.opt_local.conceallevel = 0 -- disable conceal in markdown
+    vim.opt_local.wrap = true -- wrap long lines
+    vim.opt_local.linebreak = true -- break at word boundaries
+    -- vim.opt_local.spell = true -- enable spell check
+    vim.opt_local.spelllang = "en_us" -- set spell language
+    vim.opt_local.textwidth = 80 -- optimal reading width
+    -- vim.opt_local.colorcolumn = "80" -- visual guide
   end,
 })
 
@@ -24,66 +24,79 @@ vim.api.nvim_create_autocmd("FileType", {
 -- ════════════════════════════════════════════════════════════════
 
 -- Faster startup and responsiveness
-vim.opt.updatetime = 250              -- faster completion popup (default: 4000)
-vim.opt.timeoutlen = 300              -- faster which-key popup (default: 1000)
-vim.opt.redrawtime = 10000            -- allow more time for loading
-vim.opt.scrolloff = 8                 -- keep 8 lines visible when scrolling
-vim.opt.sidescrolloff = 8             -- horizontal scroll padding
+vim.opt.updatetime = 250 -- faster completion popup (default: 4000)
+vim.opt.timeoutlen = 300 -- faster which-key popup (default: 1000)
+vim.opt.redrawtime = 10000 -- allow more time for loading
+vim.opt.scrolloff = 8 -- keep 8 lines visible when scrolling
+vim.opt.sidescrolloff = 8 -- horizontal scroll padding
 
 -- ════════════════════════════════════════════════════════════════
 -- 🎨 VISUAL IMPROVEMENTS
 -- ════════════════════════════════════════════════════════════════
 
 -- Enhanced UI
-vim.opt.termguicolors = true          -- true color support
-vim.opt.signcolumn = "yes"            -- always show sign column
-vim.opt.number = true                 -- show line numbers
-vim.opt.relativenumber = true         -- relative line numbers
-vim.opt.cursorline = true             -- highlight current line
-vim.opt.splitbelow = true             -- horizontal splits go below
-vim.opt.splitright = true             -- vertical splits go right
+vim.opt.termguicolors = true -- true color support
+vim.opt.signcolumn = "yes" -- always show sign column
+vim.opt.number = true -- show line numbers
+vim.opt.relativenumber = true -- relative line numbers
+vim.opt.cursorline = true -- highlight current line
+vim.opt.splitbelow = true -- horizontal splits go below
+vim.opt.splitright = true -- vertical splits go right
 
 -- ════════════════════════════════════════════════════════════════
--- 🔍 SEARCH IMPROVEMENTS  
+-- 🔍 SEARCH IMPROVEMENTS
 -- ════════════════════════════════════════════════════════════════
 
-vim.opt.ignorecase = true             -- ignore case in search
-vim.opt.smartcase = true              -- case sensitive if uppercase used
-vim.opt.hlsearch = false              -- no highlight search (your preference)
-vim.opt.incsearch = true              -- show match as you type
+vim.opt.ignorecase = true -- ignore case in search
+vim.opt.smartcase = true -- case sensitive if uppercase used
+vim.opt.hlsearch = false -- no highlight search (your preference)
+vim.opt.incsearch = true -- show match as you type
 
 -- ════════════════════════════════════════════════════════════════
 -- 💾 FILE HANDLING
 -- ════════════════════════════════════════════════════════════════
 
 -- Better backup handling (you have auto-save plugin)
-vim.opt.backup = false                -- no backup files
-vim.opt.writebackup = false           -- no backup before writing
-vim.opt.swapfile = false              -- no swap files
-vim.opt.undofile = true               -- persistent undo
+vim.opt.backup = false -- no backup files
+vim.opt.writebackup = false -- no backup before writing
+vim.opt.swapfile = false -- no swap files
+vim.opt.undofile = true -- persistent undo
+
+-- Persist views (make sure folds/cursor are saved)
+vim.opt.viewoptions:append({ "folds", "cursor" })
 
 -- ════════════════════════════════════════════════════════════════
 -- ⌨️  EDITING BEHAVIOR
 -- ════════════════════════════════════════════════════════════════
 
 -- Smart indenting
-vim.opt.autoindent = true             -- maintain indent
-vim.opt.smartindent = true            -- smart indent for code
-vim.opt.expandtab = true              -- use spaces instead of tabs
-vim.opt.tabstop = 2                   -- tab width
-vim.opt.shiftwidth = 2                -- indent width
-vim.opt.softtabstop = 2               -- soft tab width
+vim.opt.autoindent = true -- maintain indent
+vim.opt.smartindent = true -- smart indent for code
+vim.opt.expandtab = true -- use spaces instead of tabs
+vim.opt.tabstop = 2 -- tab width
+vim.opt.shiftwidth = 2 -- indent width
+vim.opt.softtabstop = 2 -- soft tab width
 
 -- Better completion
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
-vim.opt.pumheight = 10                -- limit popup menu height
+vim.opt.pumheight = 10 -- limit popup menu height
+
+-- ════════════════════════════════════════════════════════════════
+-- 🌳 FOLDING (Manual, persisted)
+-- ════════════════════════════════════════════════════════════════
+
+-- Use manual folds and keep files unfolded by default; view autocommands persist state
+vim.opt.foldmethod = "manual"
+vim.opt.foldenable = true
+vim.opt.foldlevel = 99
+vim.opt.foldlevelstart = 99
 
 -- ════════════════════════════════════════════════════════════════
 -- 🔧 SYSTEM INTEGRATION
 -- ════════════════════════════════════════════════════════════════
 
-vim.opt.clipboard = "unnamedplus"     -- use system clipboard
-vim.opt.mouse = "a"                   -- enable mouse in all modes
+vim.opt.clipboard = "unnamedplus" -- use system clipboard
+vim.opt.mouse = "a" -- enable mouse in all modes
 
 -- Disable LazyVim integrations to prevent conflicts
 vim.g.trouble_lualine = false

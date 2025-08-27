@@ -1,7 +1,3 @@
-local is_wezterm = (vim.env.TERM_PROGRAM == "WezTerm")
-  or (vim.env.WEZTERM_EXECUTABLE ~= nil)
-  or (vim.env.WEZTERM_PANE ~= nil)
-
 return {
   "folke/snacks.nvim",
   priority = 1000,
@@ -15,12 +11,12 @@ return {
     },
     image = {
       enabled = true,
-      -- Let Snacks auto-detect support; keep inline on and use float as fallback
-      inline = { enabled = not is_wezterm },
+      -- Use inline images by default
+      inline = { enabled = true },
       float = { enabled = true },
       -- Render only the image at cursor to avoid redraw glitches
       doc = {
-        inline = not is_wezterm,
+        inline = true,
         float = true,
         only_render_image_at_cursor = true,
         max_width = 80,

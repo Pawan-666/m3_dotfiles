@@ -1,0 +1,101 @@
+set -g default-terminal "xterm-256color"
+set -g history-limit 10000
+
+# vi mode for copy
+setw -g mode-keys vi
+set -g set-clipboard off
+bind-key -T copy-mode-vi v send-keys -X begin-selection
+bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "pbcopy"
+bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "pbcopy"
+
+set -g status-position bottom
+bind-key b set -g status
+
+# prefix key
+unbind C-b
+unbind M-m
+set-option -g prefix M-m
+
+bind-key S switch-client -l
+bind-key space last-window
+bind-key C-t run "tmux new-window 'yazi /Users/pawan/wiki/'"
+
+# pane/window management
+bind-key L split-window -h -c "#{pane_current_path}"
+bind-key J split-window -v -c "#{pane_current_path}"
+bind-key f split-window -h -c "#{pane_current_path}" 'yazi .'
+bind-key F split-window -v -c "#{pane_current_path}" 'yazi .'
+bind-key e split-window -h -c "#{pane_current_path}" "nvim ~/.tmux_files/$(echo $(tmux display-message -p '#S')$(date -u +%m-%d-%H:%M:%S))"
+bind-key E split-window -v -c "#{pane_current_path}" "nvim ~/.tmux_files/$(echo $(tmux display-message -p '#S')$(date -u +%m-%d-%H:%M:%S))"
+bind-key C-e run "tmux new-window 'nvim ~/.tmux_files/$(echo $(tmux display-message -p '#S')$(date -u +%m-%d-%H:%M:%S))'"
+bind-key i switch-client -t init
+bind C-b run "tmux new-window 'yazi /Users/pawan/wiki/my_blog/my_blog/pawan/content/blog'"
+bind C-a set-window-option synchronize-panes
+bind-key c command-prompt -p "window name:" "new-window; rename-window '%%'"
+bind C command-prompt -p "New Session:" "new-session -A -s '%%'"
+
+# pane navigation
+bind-key h select-pane -L
+bind-key j select-pane -D 
+bind-key k select-pane -U
+bind-key l select-pane -R
+
+# pane resize
+bind-key C-J resize-pane -D 5
+bind-key C-K resize-pane -U 5
+bind-key C-H resize-pane -L 5
+bind-key C-L resize-pane -R 5
+
+# window position swap
+bind-key -n C-S-Left swap-window -t -1\; select-window -t -1
+bind-key  < swap-window -t -1\; select-window -t -1
+bind-key  > swap-window -t +1\; select-window -t +1
+
+set -sg escape-time 0
+setw -g mouse on
+
+bind -n M-o next-layout
+bind-key o  rotate-window
+
+# session management
+bind s display-popup -E "tmux list-sessions | sed -E 's/:.*$//' | grep -v \"^$(tmux display-message -p '#S')\$\" | fzf --reverse | xargs tmux switch-client -t"
+bind-key K display-popup -E "\
+  tmux list-sessions -F '#{?session_attached,,#{session_name}}' |\
+   fzf --reverse -m --header=kill-session |\
+   xargs -I {} tmux kill-session -t {}"
+
+bind-key x kill-pane
+bind-key X kill-window
+bind-key R source-file ~/.tmux.conf \; display-message "~/.tmux.conf reloaded."
+
+# window settings
+set -g allow-rename off
+set -g base-index 1
+set -g pane-base-index 1
+set-window-option -g allow-rename off
+set -g renumber-windows on
+
+# status bar
+set -gq status-utf8 on
+set -g status-justify centre
+set -g status-left-length 40
+set-option -g status-left ""
+set -g status-right '#[fg=colour244] #S #[fg=colour244]#P/#{window_panes} #[fg=colour244] %d %b  %l:%M'
+set -g status-style fg=colour244,bg=default
+set-window-option -g window-status-current-style fg=brightwhite,bg=default
+
+# pane borders
+set -g pane-active-border-style 'fg=magenta,bg=default'
+set -g pane-border-style 'fg=brightblack,bg=default'
+
+# yazi support
+set -g allow-passthrough on
+set -ga update-environment TERM
+set -ga update-environment TERM_PROGRAM
+
+# plugins
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'wfxr/tmux-fzf-url'
+run '~/.tmux/plugins/tpm/tpm'
+run-shell ~/.tmux/plugins/tmux-fzf-url/fzf-url.tmux
+
