@@ -60,6 +60,9 @@ vim.opt.incsearch = true -- show match as you type
 vim.opt.backup = false -- no backup files
 vim.opt.writebackup = false -- no backup before writing
 vim.opt.swapfile = false -- no swap files
+
+-- Enhanced persistent undo
+vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir" -- dedicated undo directory
 vim.opt.undofile = true -- persistent undo
 
 -- Persist views (make sure folds/cursor are saved)

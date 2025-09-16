@@ -3,3 +3,4 @@ nvim/.config/nvim/lazy-lock.json
 nvim/.config/nvim/lazyvim.json
 .megaignore
 Icon
+nvim_1_1/

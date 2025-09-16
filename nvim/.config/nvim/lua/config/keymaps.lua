@@ -48,9 +48,10 @@ map("n", "k", "gk", { desc = "Up (visual)" })
 
 -- Buffer Navigation
 map("n", "<C-j>", ":BufferLineCycleNext<CR>", { desc = "Next buffer" })
-map("n", "<C-k>", ":BufferLineCyclePrev<CR>", { desc = "Prev buffer" })
+-- map("n", "<C-k>", ":BufferLineCyclePrev<CR>", { desc = "Prev buffer" })
 map("n", "gt", ":BufferLineCycleNext<CR>", { desc = "Next buffer" })
 map("n", "gT", ":BufferLineCyclePrev<CR>", { desc = "Prev buffer" })
+map("n", "<C-k>", "gT", { desc = "Buffer UP " })
 
 -- File Explorer or Picker
 -- map("n", "<C-t>", ":NnnPicker %:p:h<CR>", { desc = "Nnn Picker" })
@@ -82,3 +83,21 @@ vim.api.nvim_set_keymap("v", "<Leader>/", "gc", { noremap = false, silent = true
 -- end, { desc = "Force restart LSP" })
 
 map("n", "L", ":LspStart<CR>", { desc = "lsp start" })
+
+-- Ensure undo/redo work properly (explicit mappings to override any conflicts)
+map("n", "u", function()
+  if vim.fn.undotree().seq_cur > 0 then
+    vim.cmd("undo")
+  else
+    vim.notify("Already at oldest change", vim.log.levels.WARN)
+  end
+end, { desc = "Undo" })
+
+map("n", "<C-r>", function()
+  local ut = vim.fn.undotree()
+  if ut.seq_cur < ut.seq_last then
+    vim.cmd("redo")
+  else
+    vim.notify("Already at newest change", vim.log.levels.WARN)
+  end
+end, { desc = "Redo" })

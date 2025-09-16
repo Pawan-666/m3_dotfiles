@@ -21,10 +21,10 @@ return {
       enable_normal_mode_for_inputs = false,
       open_files_do_not_replace_types = { "terminal", "trouble", "qf" },
       sort_case_insensitive = false,
-      
+
       default_component_configs = {
         container = {
-          enable_character_fade = true
+          enable_character_fade = true,
         },
         indent = {
           indent_size = 2,
@@ -43,7 +43,7 @@ return {
           folder_open = "",
           folder_empty = "󰜌",
           default = "*",
-          highlight = "NeoTreeFileIcon"
+          highlight = "NeoTreeFileIcon",
         },
         modified = {
           symbol = "[+]",
@@ -56,21 +56,21 @@ return {
         },
         git_status = {
           symbols = {
-            added     = "✚",
-            modified  = "",
-            deleted   = "✖",
-            renamed   = "󰁕",
+            added = "✚",
+            modified = "",
+            deleted = "✖",
+            renamed = "󰁕",
             untracked = "",
-            ignored   = "",
-            unstaged  = "󰄱",
-            staged    = "",
-            conflict  = "",
-          }
+            ignored = "",
+            unstaged = "󰄱",
+            staged = "",
+            conflict = "",
+          },
         },
       },
-      
+
       commands = {},
-      
+
       window = {
         position = "left",
         width = 35,
@@ -79,8 +79,8 @@ return {
           nowait = true,
         },
         mappings = {
-          ["<space>"] = { 
-            "toggle_node", 
+          ["<space>"] = {
+            "toggle_node",
             nowait = false,
           },
           ["<2-LeftMouse>"] = "open",
@@ -94,11 +94,11 @@ return {
           ["w"] = "open_with_window_picker",
           ["C"] = "close_node",
           ["z"] = "close_all_nodes",
-          ["a"] = { 
+          ["a"] = {
             "add",
             config = {
-              show_path = "none"
-            }
+              show_path = "none",
+            },
           },
           ["A"] = "add_directory",
           ["d"] = "delete",
@@ -114,11 +114,11 @@ return {
           ["<"] = "prev_source",
           [">"] = "next_source",
           ["i"] = "show_file_details",
-        }
+        },
       },
-      
+
       nesting_rules = {},
-      
+
       filesystem = {
         filtered_items = {
           visible = false,
@@ -127,7 +127,7 @@ return {
           hide_hidden = true,
           hide_by_name = {
             ".DS_Store",
-            "thumbs.db"
+            "thumbs.db",
           },
           hide_by_pattern = {
             "*.meta",
@@ -138,7 +138,7 @@ return {
           },
           never_show = {
             ".DS_Store",
-            "thumbs.db"
+            "thumbs.db",
           },
           never_show_by_pattern = {
             ".null-ls_*",
@@ -163,7 +163,7 @@ return {
             ["<c-x>"] = "clear_filter",
             ["[g"] = "prev_git_modified",
             ["]g"] = "next_git_modified",
-            ["o"] = { "show_help", nowait=false, config = { title = "Order by", prefix_key = "o" }},
+            ["o"] = { "show_help", nowait = false, config = { title = "Order by", prefix_key = "o" } },
             ["oc"] = { "order_by_created", nowait = false },
             ["od"] = { "order_by_diagnostics", nowait = false },
             ["og"] = { "order_by_git_status", nowait = false },
@@ -179,10 +179,10 @@ return {
             ["<C-p>"] = "move_cursor_up",
           },
         },
-        
-        commands = {}
+
+        commands = {},
       },
-      
+
       buffers = {
         follow_current_file = {
           enabled = true,
@@ -195,38 +195,38 @@ return {
             ["bd"] = "buffer_delete",
             ["<bs>"] = "navigate_up",
             ["."] = "set_root",
-            ["o"] = { "show_help", nowait=false, config = { title = "Order by", prefix_key = "o" }},
+            ["o"] = { "show_help", nowait = false, config = { title = "Order by", prefix_key = "o" } },
             ["oc"] = { "order_by_created", nowait = false },
             ["od"] = { "order_by_diagnostics", nowait = false },
             ["om"] = { "order_by_modified", nowait = false },
             ["on"] = { "order_by_name", nowait = false },
             ["os"] = { "order_by_size", nowait = false },
             ["ot"] = { "order_by_type", nowait = false },
-          }
+          },
         },
       },
-      
+
       git_status = {
         window = {
           position = "float",
           mappings = {
-            ["A"]  = "git_add_all",
+            ["A"] = "git_add_all",
             ["gu"] = "git_unstage_file",
             ["ga"] = "git_add_file",
             ["gr"] = "git_revert_file",
             ["gc"] = "git_commit",
             ["gp"] = "git_push",
             ["gg"] = "git_commit_and_push",
-            ["o"] = { "show_help", nowait=false, config = { title = "Order by", prefix_key = "o" }},
+            ["o"] = { "show_help", nowait = false, config = { title = "Order by", prefix_key = "o" } },
             ["oc"] = { "order_by_created", nowait = false },
             ["od"] = { "order_by_diagnostics", nowait = false },
             ["om"] = { "order_by_modified", nowait = false },
             ["on"] = { "order_by_name", nowait = false },
             ["os"] = { "order_by_size", nowait = false },
             ["ot"] = { "order_by_type", nowait = false },
-          }
-        }
-      }
+          },
+        },
+      },
     })
   end,
 }

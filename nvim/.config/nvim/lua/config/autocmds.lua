@@ -224,19 +224,19 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
--- -- Auto-open outline for Markdown files
--- vim.api.nvim_create_autocmd("FileType", {
---   pattern = { "markdown" },
---   callback = function()
---     -- Avoid opening multiple times for the same buffer
---     if vim.b._outline_opened then
---       return
---     end
---     vim.b._outline_opened = true
---     -- Use pcall to avoid errors if plugin not loaded yet
---     pcall(function()
---       -- Prefer focusing main window and opening outline on the left
---       vim.cmd("OutlineOpen")
---     end)
---   end,
--- })
+-- Auto-open outline for Markdown files
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "markdown" },
+  callback = function()
+    -- Avoid opening multiple times for the same buffer
+    if vim.b._outline_opened then
+      return
+    end
+    vim.b._outline_opened = true
+    -- Use pcall to avoid errors if plugin not loaded yet
+    pcall(function()
+      -- Prefer focusing main window and opening outline on the left
+      vim.cmd("OutlineOpen")
+    end)
+  end,
+})
