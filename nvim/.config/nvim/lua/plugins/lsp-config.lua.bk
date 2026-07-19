@@ -25,18 +25,18 @@ return {
         },
       },
     })
-    
+
     -- Set up capabilities for nvim-cmp integration
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     local has_cmp, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
     if has_cmp and cmp_nvim_lsp and cmp_nvim_lsp.default_capabilities then
       capabilities = vim.tbl_deep_extend("force", capabilities, cmp_nvim_lsp.default_capabilities())
     end
-    
+
     -- Common on_attach function
     local on_attach = function(client, bufnr)
       local opts = { noremap = true, silent = true, buffer = bufnr }
-      
+
       -- LSP keymaps
       vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
       vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
@@ -50,12 +50,12 @@ return {
       vim.keymap.set("n", "<leader>f", function()
         vim.lsp.buf.format({ async = true })
       end, opts)
-      
+
       -- Enable inlay hints if available
       if client.supports_method("textDocument/inlayHint") and vim.lsp.inlay_hint then
         vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
       end
-      
+
       -- Highlight symbol under cursor
       if client.supports_method("textDocument/documentHighlight") then
         local highlight_group = vim.api.nvim_create_augroup("lsp_document_highlight", { clear = false })
@@ -71,7 +71,7 @@ return {
         })
       end
     end
-    
+
     -- Server configurations
     local servers = {
       -- Lua
@@ -90,41 +90,41 @@ return {
           },
         },
       },
-      
+
       -- Python
-      pyright = {
-        settings = {
-          python = {
-            analysis = {
-              typeCheckingMode = "basic",
-              autoSearchPaths = true,
-              useLibraryCodeForTypes = true,
-            },
-          },
-        },
-      },
-      
+      -- pyright = {
+      --   settings = {
+      --     python = {
+      --       analysis = {
+      --         typeCheckingMode = "basic",
+      --         autoSearchPaths = true,
+      --         useLibraryCodeForTypes = true,
+      --       },
+      --     },
+      --   },
+      -- },
+
       -- JavaScript/TypeScript (tsserver is deprecated, use ts_ls)
       ts_ls = {},
-      
+
       -- JSON
       jsonls = {},
-      
+
       -- YAML
       yamlls = {},
-      
+
       -- Markdown
       marksman = {},
-      
+
       -- Bash
       bashls = {},
-      
+
       -- CSS
       cssls = {},
-      
+
       -- HTML
       html = {},
-      
+
       -- Go
       gopls = {
         settings = {
@@ -165,10 +165,10 @@ return {
         },
       },
     }
-    
+
     -- Setup servers
     local lspconfig = require("lspconfig")
-    
+
     -- Get mason-lspconfig for automatic server installation
     local mason_lspconfig_ok, mason_lspconfig = pcall(require, "mason-lspconfig")
     if mason_lspconfig_ok then
@@ -176,7 +176,7 @@ return {
         ensure_installed = vim.tbl_keys(servers),
         automatic_installation = true,
       })
-      
+
       mason_lspconfig.setup_handlers({
         function(server_name)
           local server_config = servers[server_name] or {}
@@ -195,3 +195,4 @@ return {
     end
   end,
 }
+

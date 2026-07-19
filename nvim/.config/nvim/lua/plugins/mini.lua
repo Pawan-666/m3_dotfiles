@@ -1,7 +1,7 @@
 return {
   -- Collection of various small independent plugins/modules
   {
-    "echasnovski/mini.nvim",
+    "nvim-mini/mini.nvim",
     config = function()
       -- Better Around/Inside textobjects
       require("mini.ai").setup({ n_lines = 500 })
@@ -151,7 +151,7 @@ return {
   
   -- Add mappings for mini.files
   {
-    "echasnovski/mini.files",
+    "nvim-mini/mini.files",
     opts = {},
     keys = {
       {

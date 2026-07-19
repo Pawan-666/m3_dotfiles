@@ -75,6 +75,19 @@ return {
       end,
       desc = "Search Blog Content",
     },
+
+    -- Markdown heading navigation
+    {
+      "<leader>H",
+      function()
+        require("telescope.builtin").current_buffer_fuzzy_find({
+          default_text = "^### ",
+          skip_empty_lines = true,
+          prompt_title = "Jump to Heading",
+        })
+      end,
+      desc = "Search Headings",
+    },
   },
 
   config = function()

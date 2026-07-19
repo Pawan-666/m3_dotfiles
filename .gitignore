@@ -1,6 +1,7 @@
 mpv/.config/mpv/watch_later/*
 nvim/.config/nvim/lazy-lock.json
 nvim/.config/nvim/lazyvim.json
+nvim/.config/nvim/.env
+nvim/.config/nvim/lua/plugins/.claude/
 .megaignore
 Icon
-nvim_1_1/

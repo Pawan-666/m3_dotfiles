@@ -1,0 +1,176 @@
+# Gruvbox Dark flavor for yazi
+# Palette: https://github.com/morhetz/gruvbox
+
+# : Manager {{{
+
+[mgr]
+cwd = { fg = "#83a598" }
+
+# Find
+find_keyword  = { fg = "#fabd2f", bold = true, italic = true, underline = true }
+find_position = { fg = "#fe8019", bg = "reset", bold = true, italic = true }
+
+# Marker
+marker_copied   = { fg = "#b8bb26", bg = "#b8bb26" }
+marker_cut      = { fg = "#fb4934", bg = "#fb4934" }
+marker_marked   = { fg = "#83a598", bg = "#83a598" }
+marker_selected = { fg = "#fabd2f", bg = "#fabd2f" }
+
+# Count
+count_copied   = { fg = "#282828", bg = "#b8bb26" }
+count_cut      = { fg = "#282828", bg = "#fb4934" }
+count_selected = { fg = "#282828", bg = "#fabd2f" }
+
+# Border
+border_symbol = "│"
+border_style  = { fg = "#665c54" }
+
+# : }}}
+
+
+# : Tabs {{{
+
+[tabs]
+active   = { fg = "#282828", bg = "#d3869b", bold = true }
+inactive = { fg = "#d3869b", bg = "#3c3836" }
+
+# : }}}
+
+
+# : Mode {{{
+
+[mode]
+
+normal_main = { fg = "#282828", bg = "#a89984", bold = true }
+normal_alt  = { fg = "#a89984", bg = "#3c3836" }
+
+select_main = { fg = "#282828", bg = "#83a598", bold = true }
+select_alt  = { fg = "#83a598", bg = "#3c3836" }
+
+unset_main = { fg = "#282828", bg = "#fe8019", bold = true }
+unset_alt  = { fg = "#fe8019", bg = "#3c3836" }
+
+# : }}}
+
+
+# : Status bar {{{
+
+[status]
+perm_sep   = { fg = "#665c54" }
+perm_type  = { fg = "#d3869b" }
+perm_read  = { fg = "#fabd2f" }
+perm_write = { fg = "#fb4934" }
+perm_exec  = { fg = "#b8bb26" }
+
+progress_label  = { fg = "#ebdbb2", bold = true }
+progress_normal = { fg = "#b8bb26", bg = "#504945" }
+progress_error  = { fg = "#fabd2f", bg = "#fb4934" }
+
+# : }}}
+
+
+# : Pick {{{
+
+[pick]
+border   = { fg = "#d3869b" }
+active   = { fg = "#fe8019", bold = true }
+inactive = {}
+
+# : }}}
+
+
+# : Input {{{
+
+[input]
+border   = { fg = "#d3869b" }
+title    = {}
+value    = {}
+selected = { reversed = true }
+
+# : }}}
+
+
+# : Completion {{{
+
+[cmp]
+border = { fg = "#d3869b" }
+
+# : }}}
+
+
+# : Tasks {{{
+
+[tasks]
+border  = { fg = "#d3869b" }
+title   = {}
+hovered = { fg = "#fe8019", bold = true }
+
+# : }}}
+
+
+# : Which {{{
+
+[which]
+mask            = { bg = "#3c3836" }
+cand            = { fg = "#83a598" }
+rest            = { fg = "#7c6f64" }
+desc            = { fg = "#fe8019" }
+separator       = "  "
+separator_style = { fg = "#665c54" }
+
+# : }}}
+
+
+# : Help {{{
+
+[help]
+on      = { fg = "#83a598" }
+run     = { fg = "#fe8019" }
+hovered = { reversed = true, bold = true }
+footer  = { fg = "#3c3836", bg = "#ebdbb2" }
+
+# : }}}
+
+
+# : Spotter {{{
+
+[spot]
+border   = { fg = "#d3869b" }
+title    = { fg = "#d3869b" }
+tbl_col  = { fg = "#83a598" }
+tbl_cell = { fg = "#fe8019", bg = "#504945" }
+
+# : }}}
+
+
+# : Notification {{{
+
+[notify]
+title_info  = { fg = "#b8bb26" }
+title_warn  = { fg = "#fabd2f" }
+title_error = { fg = "#fb4934" }
+
+# : }}}
+
+
+# : File-specific styles {{{
+
+[filetype]
+
+rules = [
+	# Image
+	{ mime = "image/*", fg = "#83a598" },
+	# Media
+	{ mime = "{audio,video}/*", fg = "#fabd2f" },
+	# Archive
+	{ mime = "application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", fg = "#d3869b" },
+	# Document
+	{ mime = "application/{pdf,doc,rtf}", fg = "#b8bb26" },
+	# Virtual file system
+	{ mime = "vfs/{absent,stale}", fg = "#7c6f64" },
+	# Fallback
+	{ url = "*", fg = "#ebdbb2" },
+	{ url = "*/", fg = "#d3869b" },
+]
+
+# : }}}

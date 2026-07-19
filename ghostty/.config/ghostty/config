@@ -22,8 +22,9 @@
 #
 # Cycles are not allowed. If a cycle is detected, an error will be logged and
 # the configuration file will be ignored.
-config-file = ghostty-theme
-# theme = GruvboxDark
+# config-file = ghostty-theme
+# theme = Gruvbox Light
+theme = Afterglow
 # background-image = "/Users/pawan/obsidian_pawan/0_Inbox/images/wall/0163.jpg"
 # background-blur = true
 # Some shaders can be found in this repo, they're usually uploaded to discord
@@ -105,7 +106,9 @@ custom-shader = shaders/cursor_smear.glsl
 # echo '' >>~/.zprofile && echo '# Configure shell for brew' >>~/.zprofile && echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >>~/.zprofile && eval "$(/opt/homebrew/bin/brew shellenv)"
 #
 # This assumes you installed tmux through brew if using macos
-command = zsh --login -c "if command -v tmux >/dev/null 2>&1; then tmux attach || tmux; else zsh; fi"
+
+
+# command = zsh --login -c "if command -v tmux >/dev/null 2>&1; then tmux attach || tmux; else zsh; fi"
 # command = zsh --login -c "if command -v tmux >/dev/null 2>&1; then $HOME/github/dotfiles-latest/tmux/tools/prime/tmux-sessionizer.sh $HOME/github/dotfiles-latest || (tmux attach 2>/dev/null || tmux); else exec zsh; fi"
 
 # Horizontal window padding. This applies padding between the terminal cells

@@ -9,6 +9,7 @@ bar=(
   sticky=on               # Show on all spaces
   padding_left=7          # Left padding
   padding_right=7         # Right padding
+  # display=1               # Only show on built-in display
 )
 
 # Default item styling

@@ -87,14 +87,9 @@ eval "$(fzf --zsh)"
 
 
 
-export PATH=/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:~/.local/bin
+export PATH=/opt/homebrew/bin:/opt/homebrew/sbin:/opt/homebrew/opt/mysql-client/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:~/.local/bin:~/.cargo/bin:/nix/var/nix/profiles/default/bin:/opt/homebrew/opt/postgresql@18/bin:/Users/pawan/dragterm/dragterm:/Users/pawan/.deno/env
 
 
-
-
-##############New addittion
-# export PATH=/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:~/.local/bin
-# export EDITOR=lvim
 
 source ~/.zsh_alias
 
@@ -126,14 +121,19 @@ mkdircd() {
 export PROMPT_EOL_MARK=""           # Hide EOL sign ('%')
 bindkey -s '^t' '^uyy\n'           # Ctrl+T opens yazi
 
-# Node Version Manager
+# Node Version Manager (lazy-loaded — eager sourcing cost ~330ms/77% of startup)
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+_load_nvm() {
+    unset -f nvm node npm npx 2>/dev/null
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+}
+nvm()  { _load_nvm; nvm  "$@"; }
+node() { _load_nvm; node "$@"; }
+npm()  { _load_nvm; npm  "$@"; }
+npx()  { _load_nvm; npx  "$@"; }
 
-# Tmux-specific configuration
-if [[ -n "$TMUX" ]]; then
-    autoload -U edit-command-line
-    zle -N edit-command-line
-    bindkey '^X^E' edit-command-line    # Ctrl+X Ctrl+E to edit command line
-fi
+# Ctrl+X Ctrl+E to edit the current command line in $EDITOR
+autoload -U edit-command-line
+zle -N edit-command-line
+bindkey '^X^E' edit-command-line

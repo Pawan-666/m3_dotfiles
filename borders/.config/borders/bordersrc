@@ -1,14 +1,26 @@
 #!/bin/bash
 
-# Window borders configuration
-# Colors: Gruvbox theme with transparent inactive windows
+# # Window borders configuration
+# # Colors: Gruvbox theme with transparent inactive windows
+# options=(
+#   style=round               # Round border corners
+#   width=4                   # Border width in pixels
+#   hidpi=off                 # Disable HiDPI scaling
+#   active_color=0xffb8bb26   # Active window: Gruvbox yellow-green
+#   inactive_color=0x00000000 # Inactive window: Transparent
+# )
+#
+# # Apply border settings
+# borders "${options[@]}"
+#
+# #!/bin/bash
+
 options=(
-  style=round                # Round border corners
-  width=4                   # Border width in pixels
-  hidpi=off                 # Disable HiDPI scaling
-  active_color=0xffb8bb26   # Active window: Gruvbox yellow-green
-  inactive_color=0x00000000 # Inactive window: Transparent
+  style=round
+  width=6.0
+  hidpi=off
+  active_color=0xFFEB212E
+  inactive_color=0XFF414550
 )
 
-# Apply border settings
 borders "${options[@]}"

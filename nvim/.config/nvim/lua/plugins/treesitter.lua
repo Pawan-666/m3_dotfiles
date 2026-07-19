@@ -1,139 +1,111 @@
 return {
-  "nvim-treesitter/nvim-treesitter",
-  version = false,
-  build = ":TSUpdate",
-  event = { "LazyFile", "VeryLazy" },
-  lazy = vim.fn.argc(-1) == 0,
-  init = function(plugin)
-    require("lazy.core.loader").add_to_rtp(plugin)
-    require("nvim-treesitter.query_predicates")
-  end,
-  dependencies = {
+  -- Main treesitter — let LazyVim v16's config handle the new API.
+  -- We only override opts here (ensure_installed is merged via opts_extend).
+  {
+    "nvim-treesitter/nvim-treesitter",
+    opts = {
+      ensure_installed = {
+        "bash",
+        "c",
+        "diff",
+        "html",
+        "javascript",
+        "jsdoc",
+        "json",
+        "lua",
+        "luadoc",
+        "luap",
+        "markdown",
+        "markdown_inline",
+        "printf",
+        "python",
+        "query",
+        "regex",
+        "toml",
+        "tsx",
+        "typescript",
+        "vim",
+        "vimdoc",
+        "xml",
+        "yaml",
+        -- Additional languages for blog content and development
+        "css",
+        "scss",
+        "go",
+        "rust",
+        "dockerfile",
+        "gitignore",
+        "sql",
+      },
+    },
+  },
+
+  -- Textobjects: LazyVim handles move keymaps; add select + swap here.
+  {
     "nvim-treesitter/nvim-treesitter-textobjects",
-    "nvim-treesitter/nvim-treesitter-context",
-  },
-  cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
-  keys = {
-    { "<c-space>", desc = "Increment Selection" },
-    { "<bs>", desc = "Decrement Selection", mode = "x" },
-  },
-  opts_extend = { "ensure_installed" },
-  opts = {
-    highlight = { 
-      enable = true,
-      additional_vim_regex_highlighting = false,
-    },
-    indent = { enable = true },
-    
-    -- Enhanced language support for your blog and development workflow
-    ensure_installed = {
-      "bash",
-      "c",
-      "diff",
-      "html",
-      "javascript",
-      "jsdoc",
-      "json",
-      "jsonc",
-      "lua",
-      "luadoc",
-      "luap",
-      "markdown",
-      "markdown_inline",
-      "printf",
-      "python",
-      "query",
-      "regex",
-      "toml",
-      "tsx",
-      "typescript",
-      "vim",
-      "vimdoc",
-      "xml",
-      "yaml",
-      -- Additional languages for blog content
-      "css",
-      "scss",
-      "go",
-      "rust",
-      "dockerfile",
-      "gitignore",
-      "sql",
-    },
-    
-    incremental_selection = {
-      enable = true,
-      keymaps = {
-        init_selection = "<C-space>",
-        node_incremental = "<C-space>",
-        scope_incremental = false,
-        node_decremental = "<bs>",
-      },
-    },
-    
-    textobjects = {
-      select = {
-        enable = true,
-        lookahead = true,
-        keymaps = {
-          ["aa"] = "@parameter.outer",
-          ["ia"] = "@parameter.inner",
-          ["af"] = "@function.outer",
-          ["if"] = "@function.inner",
-          ["ac"] = "@class.outer",
-          ["ic"] = "@class.inner",
-          ["ii"] = "@conditional.inner",
-          ["ai"] = "@conditional.outer",
-          ["il"] = "@loop.inner",
-          ["al"] = "@loop.outer",
-          ["at"] = "@comment.outer",
-        },
-      },
-      move = {
-        enable = true,
-        goto_next_start = { ["]f"] = "@function.outer", ["]c"] = "@class.outer", ["]a"] = "@parameter.inner" },
-        goto_next_end = { ["]F"] = "@function.outer", ["]C"] = "@class.outer", ["]A"] = "@parameter.inner" },
-        goto_previous_start = { ["[f"] = "@function.outer", ["[c"] = "@class.outer", ["[a"] = "@parameter.inner" },
-        goto_previous_end = { ["[F"] = "@function.outer", ["[C"] = "@class.outer", ["[A"] = "@parameter.inner" },
-      },
-      swap = {
-        enable = true,
-        swap_next = {
-          ["<leader>a"] = "@parameter.inner",
-        },
-        swap_previous = {
-          ["<leader>A"] = "@parameter.inner",
-        },
-      },
-    },
-  },
-  config = function(_, opts)
-    if type(opts.ensure_installed) == "table" then
-      -- Remove duplicates manually
-      local seen = {}
-      local result = {}
-      for _, item in ipairs(opts.ensure_installed) do
-        if not seen[item] then
-          seen[item] = true
-          table.insert(result, item)
-        end
+    config = function(_, opts)
+      local TS = require("nvim-treesitter-textobjects")
+      if not TS.setup then
+        return
       end
-      opts.ensure_installed = result
-    end
-    require("nvim-treesitter.configs").setup(opts)
-    
-    -- Setup treesitter context
-    require("treesitter-context").setup({
+      TS.setup(opts)
+
+      local select_maps = {
+        ["aa"] = "@parameter.outer",
+        ["ia"] = "@parameter.inner",
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+        ["ic"] = "@class.inner",
+        ["ii"] = "@conditional.inner",
+        ["ai"] = "@conditional.outer",
+        ["il"] = "@loop.inner",
+        ["al"] = "@loop.outer",
+        ["at"] = "@comment.outer",
+      }
+
+      local function attach(buf)
+        local ft = vim.bo[buf].filetype
+        if not pcall(require("lazyvim.util").treesitter.have, ft, "textobjects") then
+          return
+        end
+        for key, query in pairs(select_maps) do
+          vim.keymap.set({ "x", "o" }, key, function()
+            require("nvim-treesitter-textobjects.select").select_textobject(query, "textobjects")
+          end, { buffer = buf, silent = true })
+        end
+        vim.keymap.set("n", "<leader>a", function()
+          require("nvim-treesitter-textobjects.swap").swap_next("@parameter.inner", "textobjects")
+        end, { buffer = buf, silent = true, desc = "Swap next parameter" })
+        vim.keymap.set("n", "<leader>A", function()
+          require("nvim-treesitter-textobjects.swap").swap_previous("@parameter.inner", "textobjects")
+        end, { buffer = buf, silent = true, desc = "Swap prev parameter" })
+      end
+
+      vim.api.nvim_create_autocmd("FileType", {
+        group = vim.api.nvim_create_augroup("treesitter_textobjects_keymaps", { clear = true }),
+        callback = function(ev)
+          attach(ev.buf)
+        end,
+      })
+      for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+        attach(buf)
+      end
+    end,
+  },
+
+  -- Treesitter context
+  {
+    "nvim-treesitter/nvim-treesitter-context",
+    opts = {
       enable = true,
       max_lines = 0,
       min_window_height = 0,
       line_numbers = true,
       multiline_threshold = 20,
-      trim_scope = 'outer',
-      mode = 'cursor',
-      separator = nil,
+      trim_scope = "outer",
+      mode = "cursor",
       zindex = 20,
-      on_attach = nil,
-    })
-  end,
+    },
+  },
 }

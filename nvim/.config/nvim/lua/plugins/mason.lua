@@ -1,5 +1,5 @@
 return {
-  "williamboman/mason.nvim",
+  "mason-org/mason.nvim",
   cmd = "Mason",
   keys = { { "<leader>cm", "<cmd>Mason<cr>", desc = "Mason" } },
   build = ":MasonUpdate",
@@ -8,7 +8,7 @@ return {
     ensure_installed = {
       -- LSP servers
       "lua-language-server",
-      "pyright",
+      -- "pyright",
       "typescript-language-server", -- This installs ts_ls
       "json-lsp",
       "yaml-language-server",
@@ -30,14 +30,14 @@ return {
       -- Linters
       "shellcheck",
       "flake8",
-      "pylint",
+      -- "pylint",
       "eslint_d",
       "markdownlint",
       "yamllint",
 
       -- DAP (Debug Adapter Protocol)
-      "debugpy",
-      "node-debug2-adapter",
+      -- "debugpy",
+      -- "node-debug2-adapter",
       "delve",
     },
     ui = {
@@ -99,4 +99,3 @@ return {
     end
   end,
 }
-

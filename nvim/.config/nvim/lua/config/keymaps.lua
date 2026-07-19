@@ -81,7 +81,13 @@ vim.api.nvim_set_keymap("v", "<Leader>/", "gc", { noremap = false, silent = true
 --     vim.cmd("LspStart")
 --   end, 100) -- wait 100ms before restarting
 -- end, { desc = "Force restart LSP" })
+--
 
+-- === KANBAN ===
+map("n", "<leader>ok", ":KanbanOpen<CR>", { desc = "Open Kanban" })
+map("n", "<leader>opk", ":KanbanOpen ~/wiki/obsidian/kanban/p_kanban.md<CR>", { desc = "Work kanban" })
+map("n", "<leader>olk", ":KanbanOpen ~/wiki/obsidian/kanban/l_kanban.md<CR>", { desc = "Work kanban" })
+map("n", "<leader>ouk", ":KanbanOpen ~/wiki/obsidian/kanban/w_kanban.md<CR>", { desc = "Work kanban" })
 map("n", "L", ":LspStart<CR>", { desc = "lsp start" })
 
 -- Ensure undo/redo work properly (explicit mappings to override any conflicts)
