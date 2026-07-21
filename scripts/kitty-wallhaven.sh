@@ -15,7 +15,7 @@ set -u
 QUERY=""                  # Wallhaven search terms (empty = any; purity/categories still apply)
 FALLBACK_QUERY=""         # used if QUERY returns 0 results (so a change never no-ops)
 CATEGORIES="100"          # 100=general, 010=anime, 001=people (bit flags)
-PURITY="111"              # 100=sfw, 110=sfw+sketchy, 111=+nsfw (nsfw needs the API key below)
+PURITY="001"              # NSFW only (100=sfw 010=sketchy 001=nsfw; nsfw needs the API key below)
 ATLEAST="2560x1440"       # minimum resolution
 RATIOS="16x9"             # preferred aspect ratios
 LAYOUT="cscaled"          # kitty background_image_layout (cover, keep aspect)
