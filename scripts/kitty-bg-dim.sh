@@ -16,7 +16,7 @@ CACHE="$HOME/.cache/kitty-wallhaven"
 KITTEN="/Applications/kitty.app/Contents/MacOS/kitten"
 TINT_CONF="$CACHE/tint.conf"
 STATE="$CACHE/bg-state"
-DEF_OPACITY="0.78"
+DEF_OPACITY="0.5"
 DEF_TINT="0.92"
 STEP="0.1"
 
