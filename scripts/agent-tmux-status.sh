@@ -15,13 +15,12 @@ if [ -z "$TMUX" ] || [ -z "$TMUX_PANE" ]; then
   exit 0
 fi
 
-# Muted 256-color dots (#[default] restores the window-status style after the dot).
+# Blinking green while actively processing, gray for every other state.
+# (#[default] restores the window-status style after the dot.)
 case "$1" in
-  working) v="#[fg=colour179]●#[default] " ;;   # soft amber
-  waiting) v="#[fg=colour167]●#[default] " ;;   # soft red
-  done)    v="#[fg=colour109]●#[default] " ;;   # soft blue
-  idle)    v="#[fg=colour108]●#[default] " ;;   # soft green
-  *)       v="" ;;                               # clear / unknown
+  working)            v="#[fg=colour46,blink]●#[default] " ;;   # live green, blinking
+  waiting|done|idle)  v="#[fg=colour244]●#[default] " ;;        # gray
+  *)                  v="" ;;                                    # clear / unknown
 esac
 
 if [ -z "$v" ]; then
