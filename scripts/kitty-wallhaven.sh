@@ -93,6 +93,7 @@ mv "$tmp" "$img"
 # ----------------------------------------------------------------------------- point kitty at it
 # New windows: via kitty.conf `include`.
 printf 'background_image %s\n' "$img" >"$CONF"
+echo on >"$CACHE/bg-state"   # a fresh image means the wallpaper is shown
 
 # Live windows: update every running kitty instance.
 shopt -s nullglob
