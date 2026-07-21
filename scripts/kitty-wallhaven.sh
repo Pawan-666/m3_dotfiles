@@ -12,14 +12,15 @@
 set -u
 
 # ----------------------------------------------------------------------------- CONFIG
-QUERY="dark minimal"        # Wallhaven search terms
-CATEGORIES="100"            # 100=general, 010=anime, 001=people (bit flags)
-PURITY="110"               # 100=sfw, 110=sfw+sketchy, 111=+nsfw (nsfw needs an API key)
-ATLEAST="2560x1440"        # minimum resolution
-RATIOS="16x9"              # preferred aspect ratios
-LAYOUT="cscaled"           # kitty background_image_layout (cover, keep aspect)
+QUERY="dark minimal nsfw" # Wallhaven search terms
+FALLBACK_QUERY="dark minimal" # used if QUERY returns 0 results (so a change never no-ops)
+CATEGORIES="100"          # 100=general, 010=anime, 001=people (bit flags)
+PURITY="110"              # 100=sfw, 110=sfw+sketchy, 111=+nsfw (nsfw needs an API key)
+ATLEAST="2560x1440"       # minimum resolution
+RATIOS="16x9"             # preferred aspect ratios
+LAYOUT="cscaled"          # kitty background_image_layout (cover, keep aspect)
 CACHE="$HOME/.cache/kitty-wallhaven"
-MAX_AGE=72000              # freshness guard, seconds (~20h)
+MAX_AGE=72000 # freshness guard, seconds (~20h)
 UA="kitty-wallhaven/1.0"
 
 # Absolute tool paths (launchd runs with a bare environment).
@@ -54,16 +55,27 @@ if [ -z "$APIKEY" ] && [ "$PURITY" = "111" ]; then
 fi
 
 # ----------------------------------------------------------------------------- query the API
-resp="$("$CURL" -sS -A "$UA" -G "$API" \
-  --data-urlencode "q=$QUERY" \
-  --data "categories=$CATEGORIES" \
-  --data "purity=$PURITY" \
-  --data "atleast=$ATLEAST" \
-  --data "ratios=$RATIOS" \
-  --data "sorting=random" \
-  ${APIKEY:+--data "apikey=$APIKEY"} 2>>"$LOG")" || { log "curl(search) failed; keeping current image"; exit 0; }
+do_search() {  # $1 = query string
+  "$CURL" -sS -A "$UA" -G "$API" \
+    --data-urlencode "q=$1" \
+    --data "categories=$CATEGORIES" \
+    --data "purity=$PURITY" \
+    --data "atleast=$ATLEAST" \
+    --data "ratios=$RATIOS" \
+    --data "sorting=random" \
+    ${APIKEY:+--data "apikey=$APIKEY"} 2>>"$LOG"
+}
 
+resp="$(do_search "$QUERY")" || { log "curl(search) failed; keeping current image"; exit 0; }
 count="$(printf '%s' "$resp" | "$JQ" '.data | length' 2>/dev/null || echo 0)"
+
+# Fall back to a broad query if the primary one matches nothing.
+if ! [ "$count" -gt 0 ] 2>/dev/null && [ -n "$FALLBACK_QUERY" ] && [ "$QUERY" != "$FALLBACK_QUERY" ]; then
+  log "no results for '$QUERY'; falling back to '$FALLBACK_QUERY'"
+  resp="$(do_search "$FALLBACK_QUERY")" || true
+  count="$(printf '%s' "$resp" | "$JQ" '.data | length' 2>/dev/null || echo 0)"
+fi
+
 if ! [ "$count" -gt 0 ] 2>/dev/null; then
   log "no results (count=$count); keeping current image"
   exit 0
@@ -78,9 +90,10 @@ if [ -z "$url" ] || [ "$url" = "null" ]; then
 fi
 
 # ----------------------------------------------------------------------------- download
-ext="${url##*.}"; [ -n "$ext" ] || ext="jpg"
+ext="${url##*.}"
+[ -n "$ext" ] || ext="jpg"
 tmp="$CACHE/.dl.$ext"
-img="$CACHE/bg.$ext"       # note: 'bg.*' base so it never collides with wallhaven.log
+img="$CACHE/bg.$ext" # note: 'bg.*' base so it never collides with wallhaven.log
 if ! "$CURL" -sS -A "$UA" -o "$tmp" "$url" 2>>"$LOG"; then
   log "curl(download) failed for $url; keeping current image"
   rm -f "$tmp"
@@ -93,7 +106,7 @@ mv "$tmp" "$img"
 # ----------------------------------------------------------------------------- point kitty at it
 # New windows: via kitty.conf `include`.
 printf 'background_image %s\n' "$img" >"$CONF"
-echo on >"$CACHE/bg-state"   # a fresh image means the wallpaper is shown
+echo on >"$CACHE/bg-state" # a fresh image means the wallpaper is shown
 
 # Live windows: update every running kitty instance.
 shopt -s nullglob
