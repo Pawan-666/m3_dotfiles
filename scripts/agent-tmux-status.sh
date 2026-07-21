@@ -37,12 +37,14 @@ case "$1" in
     {
       tmux set -w -t "$PANE" @ai_anim_pid "$BASHPID" 2>/dev/null
       frames=(· ✢ ✳ ✶ ✻ ✽ ✻ ✶ ✳ ✢)
+      colors=(208 214 216 209 203 209 216 214)   # warm orange→coral shimmer
       n=${#frames[@]}
+      m=${#colors[@]}
       i=0
       while :; do
         [ "$(tmux show -wv -t "$PANE" @ai_anim_pid 2>/dev/null)" = "$BASHPID" ] || break
         tmux list-panes -a -F '#{pane_id}' 2>/dev/null | grep -qx "$PANE" || break
-        tmux set -w -t "$PANE" @ai_status "#[fg=colour46]${frames[i % n]}#[default] " 2>/dev/null
+        tmux set -w -t "$PANE" @ai_status "#[fg=colour${colors[i % m]}]${frames[i % n]}#[default] " 2>/dev/null
         tmux refresh-client -S 2>/dev/null
         i=$((i + 1))
         sleep 0.12
