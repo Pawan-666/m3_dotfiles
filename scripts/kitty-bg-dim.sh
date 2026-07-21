@@ -17,7 +17,7 @@ KITTEN="/Applications/kitty.app/Contents/MacOS/kitten"
 TINT_CONF="$CACHE/tint.conf"
 STATE="$CACHE/bg-state"
 DEF_OPACITY="0.1"   # off-mode reset: very see-through when there's no wallpaper
-DEF_TINT="0.7"    # wallpaper shows at ~30% (kitty fades images via tint, not opacity)
+DEF_TINT="0.95"   # wallpaper very faint by default (~5%); Ctrl+= makes it bolder
 STEP="0.1"
 
 mkdir -p "$CACHE"
