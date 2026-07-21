@@ -32,8 +32,9 @@ if [ "$state" = "off" ]; then
     reset) arg="$DEF_OPACITY" ;;
     *) exit 0 ;;
   esac
-  # `--` so a negative delta like -0.05 is treated as a value, not a flag.
-  for s in $(sockets); do "$KITTEN" @ --to "unix:$s" set-background-opacity -- "$arg" 2>/dev/null; done
+  # `--all` keeps every OS window in sync; `--` so a negative delta like -0.05
+  # is treated as a value, not a flag. kitty clamps opacity to [0.0, 1.0].
+  for s in $(sockets); do "$KITTEN" @ --to "unix:$s" set-background-opacity --all -- "$arg" 2>/dev/null; done
 else
   # Image on: change tint via include + load-config (no runtime tint command exists).
   cur="$(sed -n 's/^background_tint[[:space:]]*//p' "$TINT_CONF" 2>/dev/null | head -1)"
