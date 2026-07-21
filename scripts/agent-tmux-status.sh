@@ -3,7 +3,7 @@
 # Called from agent lifecycle hooks. Sets a per-window tmux variable @ai_status
 # rendered by window-status-format next to each window/tab.
 #
-#   working -> animated green mosaic spinner (background loop)
+#   working -> animated green twinkling star (Claude-style ✳), background loop
 #   other   -> static gray dot
 #   clear   -> nothing
 #
@@ -27,26 +27,30 @@ stop_anim() {
 
 case "$1" in
   working)
-    # If an animator is already running for this window, leave it be.
+    # Skip if an animator is already running for this window.
     pid="$(get_opt @ai_anim_pid)"
     if [ -n "$pid" ] && kill -0 "$pid" 2>/dev/null; then exit 0; fi
 
-    # Detached mosaic animator: cycles a green braille spinner until the state
-    # changes (a new pid takes over) or the pane disappears.
+    # Detached animator: twinkling green Claude-style star. It SELF-REGISTERS its
+    # own pid first (no parent/child race), then loops while it still owns the
+    # window; a newer animator taking over makes this one reap itself.
     {
-      frames=(◐ ◓ ◑ ◒)
+      tmux set -w -t "$PANE" @ai_anim_pid "$BASHPID" 2>/dev/null
+      frames=(· ✢ ✳ ✶ ✻ ✽ ✻ ✶ ✳ ✢)
       n=${#frames[@]}
       i=0
       while :; do
-        tmux list-panes -a -F '#{pane_id}' 2>/dev/null | grep -qx "$PANE" || break
         [ "$(tmux show -wv -t "$PANE" @ai_anim_pid 2>/dev/null)" = "$BASHPID" ] || break
+        tmux list-panes -a -F '#{pane_id}' 2>/dev/null | grep -qx "$PANE" || break
         tmux set -w -t "$PANE" @ai_status "#[fg=colour46]${frames[i % n]}#[default] " 2>/dev/null
         tmux refresh-client -S 2>/dev/null
         i=$((i + 1))
         sleep 0.12
       done
+      # Clear our registration if we still own it.
+      [ "$(tmux show -wv -t "$PANE" @ai_anim_pid 2>/dev/null)" = "$BASHPID" ] \
+        && tmux set -wu -t "$PANE" @ai_anim_pid 2>/dev/null
     } >/dev/null 2>&1 &
-    tmux set -w -t "$PANE" @ai_anim_pid "$!" 2>/dev/null
     ;;
   waiting|done|idle)
     stop_anim
