@@ -12,8 +12,8 @@
 set -u
 
 # ----------------------------------------------------------------------------- CONFIG
-QUERY="dark minimal"      # Wallhaven search terms (purity, below, controls the rating)
-FALLBACK_QUERY="dark minimal" # used if QUERY returns 0 results (so a change never no-ops)
+QUERY=""                  # Wallhaven search terms (empty = any; purity/categories still apply)
+FALLBACK_QUERY=""         # used if QUERY returns 0 results (so a change never no-ops)
 CATEGORIES="100"          # 100=general, 010=anime, 001=people (bit flags)
 PURITY="111"              # 100=sfw, 110=sfw+sketchy, 111=+nsfw (nsfw needs the API key below)
 ATLEAST="2560x1440"       # minimum resolution
