@@ -80,14 +80,14 @@ fi
 # ----------------------------------------------------------------------------- download
 ext="${url##*.}"; [ -n "$ext" ] || ext="jpg"
 tmp="$CACHE/.dl.$ext"
-img="$CACHE/wallhaven.$ext"
+img="$CACHE/bg.$ext"       # note: 'bg.*' base so it never collides with wallhaven.log
 if ! "$CURL" -sS -A "$UA" -o "$tmp" "$url" 2>>"$LOG"; then
   log "curl(download) failed for $url; keeping current image"
   rm -f "$tmp"
   exit 0
 fi
 # swap in atomically-ish
-rm -f "$CACHE"/wallhaven.* 2>/dev/null
+rm -f "$CACHE"/bg.* 2>/dev/null
 mv "$tmp" "$img"
 
 # ----------------------------------------------------------------------------- point kitty at it
