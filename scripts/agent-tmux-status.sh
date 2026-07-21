@@ -34,7 +34,7 @@ case "$1" in
     # Detached mosaic animator: cycles a green braille spinner until the state
     # changes (a new pid takes over) or the pane disappears.
     {
-      frames=(⣾ ⣽ ⣻ ⢿ ⡿ ⣟ ⣯ ⣷)
+      frames=(◐ ◓ ◑ ◒)
       n=${#frames[@]}
       i=0
       while :; do
