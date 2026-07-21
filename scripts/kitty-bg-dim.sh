@@ -18,7 +18,7 @@ TINT_CONF="$CACHE/tint.conf"
 STATE="$CACHE/bg-state"
 DEF_OPACITY="0.78"
 DEF_TINT="0.92"
-STEP="0.05"
+STEP="0.1"
 
 mkdir -p "$CACHE"
 state="$(cat "$STATE" 2>/dev/null || echo on)"
