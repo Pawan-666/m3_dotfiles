@@ -4,7 +4,9 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # Homebrew setup (macOS)
-if [[ -f "/opt/homebrew/bin/brew" ]] then
+# ~/.zprofile already runs this for login shells; the guard skips a redundant
+# 20ms fork there and still covers non-login shells, where it hasn't run.
+if [[ -z $HOMEBREW_PREFIX && -f "/opt/homebrew/bin/brew" ]] then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
@@ -33,14 +35,18 @@ zinit light Aloxaf/fzf-tab
 zinit snippet OMZL::git.zsh
 zinit snippet OMZP::git
 zinit snippet OMZP::sudo
-zinit snippet OMZP::archlinux
 zinit snippet OMZP::aws
 zinit snippet OMZP::kubectl
-zinit snippet OMZP::kubectx
-zinit snippet OMZP::command-not-found
 
 # Initialize completions
-autoload -Uz compinit && compinit
+# compaudit (the fpath security scan) costs ~22ms and rarely changes its answer,
+# so pay for it once a day; -C reuses the existing dump the rest of the time.
+autoload -Uz compinit
+if [[ -n ${ZDOTDIR:-$HOME}/.zcompdump(#qN.mh+24) ]]; then
+  compinit
+else
+  compinit -C
+fi
 zinit cdreplay -q
 
 # Editor configuration
@@ -112,8 +118,20 @@ penv() {
 # --no-rehash skips the shim rebuild on every shell start (faster panes, and
 # avoids wedging on a stale ~/.pyenv/shims/.pyenv-shim lock). Run `pyenv rehash`
 # by hand after installing a package that adds a new executable.
-eval "$(pyenv init - --no-rehash)"
-if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
+#
+# Both inits emit the same script every time but cost ~140ms of fork+exec to do
+# it — half of total startup — so cache their output and just source it. Cached
+# rather than lazy-loaded on purpose: lazy-loading would leave virtualenv-init's
+# auto-activate hook uninstalled until the first `pyenv` call. The cache is
+# rebuilt whenever the pyenv binary is newer than it, i.e. after a brew upgrade.
+_pyenv_cache="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/pyenv-init.zsh"
+if [[ ! -s $_pyenv_cache || $commands[pyenv] -nt $_pyenv_cache ]]; then
+  mkdir -p ${_pyenv_cache:h}
+  { pyenv init - --no-rehash
+    which pyenv-virtualenv-init >/dev/null && pyenv virtualenv-init -
+  } >| $_pyenv_cache
+fi
+source $_pyenv_cache
 
 # Utility functions
 mkdircd() {
