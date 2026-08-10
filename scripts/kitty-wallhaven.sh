@@ -12,13 +12,13 @@
 set -u
 
 # ----------------------------------------------------------------------------- CONFIG
-QUERY=""                  # Wallhaven search terms (empty = any; purity/categories still apply)
-FALLBACK_QUERY=""         # used if QUERY returns 0 results (so a change never no-ops)
-CATEGORIES="100"          # 100=general, 010=anime, 001=people (bit flags)
-PURITY="100"              # SFW only (100=sfw 010=sketchy 001=nsfw)
-ATLEAST="2560x1440"       # minimum resolution
-RATIOS="16x9"             # preferred aspect ratios
-LAYOUT="cscaled"          # kitty background_image_layout (cover, keep aspect)
+QUERY=""            # Wallhaven search terms (empty = any; purity/categories still apply)
+FALLBACK_QUERY=""   # used if QUERY returns 0 results (so a change never no-ops)
+CATEGORIES="100"    # 100=general, 010=anime, 001=people (bit flags)
+PURITY="100"        # SFW only (100=sfw 010=sketchy 001=nsfw)
+ATLEAST="2560x1440" # minimum resolution
+RATIOS="16x9"       # preferred aspect ratios
+LAYOUT="cscaled"    # kitty background_image_layout (cover, keep aspect)
 CACHE="$HOME/.cache/kitty-wallhaven"
 MAX_AGE=72000 # freshness guard, seconds (~20h)
 UA="kitty-wallhaven/1.0"
@@ -55,7 +55,7 @@ if [ -z "$APIKEY" ] && [ "$PURITY" = "111" ]; then
 fi
 
 # ----------------------------------------------------------------------------- query the API
-do_search() {  # $1 = query string
+do_search() { # $1 = query string
   "$CURL" -sS -A "$UA" -G "$API" \
     --data-urlencode "q=$1" \
     --data "categories=$CATEGORIES" \
@@ -66,7 +66,10 @@ do_search() {  # $1 = query string
     ${APIKEY:+--data "apikey=$APIKEY"} 2>>"$LOG"
 }
 
-resp="$(do_search "$QUERY")" || { log "curl(search) failed; keeping current image"; exit 0; }
+resp="$(do_search "$QUERY")" || {
+  log "curl(search) failed; keeping current image"
+  exit 0
+}
 count="$(printf '%s' "$resp" | "$JQ" '.data | length' 2>/dev/null || echo 0)"
 
 # Fall back to a broad query if the primary one matches nothing.

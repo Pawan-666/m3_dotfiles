@@ -16,8 +16,8 @@ CACHE="$HOME/.cache/kitty-wallhaven"
 KITTEN="/Applications/kitty.app/Contents/MacOS/kitten"
 TINT_CONF="$CACHE/tint.conf"
 STATE="$CACHE/bg-state"
-DEF_OPACITY="0.1"   # off-mode reset: very see-through when there's no wallpaper
-DEF_TINT="0.98"   # wallpaper nearly invisible by default (~2%); Ctrl+= makes it bolder
+DEF_OPACITY="0.1" # off-mode reset: very see-through when there's no wallpaper
+DEF_TINT="0.99"   # wallpaper nearly invisible by default (~2%); Ctrl+= makes it bolder
 STEP="0.1"
 
 mkdir -p "$CACHE"
@@ -27,10 +27,10 @@ sockets() { for s in /tmp/kitty-*; do [ -S "$s" ] && echo "$s"; done; }
 if [ "$state" = "off" ]; then
   # No image: kitty accepts relative opacity deltas.
   case "${1:-}" in
-    more)  arg="-$STEP" ;;
-    less)  arg="+$STEP" ;;
-    reset) arg="$DEF_OPACITY" ;;
-    *) exit 0 ;;
+  more) arg="-$STEP" ;;
+  less) arg="+$STEP" ;;
+  reset) arg="$DEF_OPACITY" ;;
+  *) exit 0 ;;
   esac
   # `--all` keeps every OS window in sync; `--` so a negative delta like -0.05
   # is treated as a value, not a flag. kitty clamps opacity to [0.0, 1.0].
@@ -40,10 +40,10 @@ else
   cur="$(sed -n 's/^background_tint[[:space:]]*//p' "$TINT_CONF" 2>/dev/null | head -1)"
   [ -n "$cur" ] || cur="$DEF_TINT"
   case "${1:-}" in
-    more)  new="$(awk -v c="$cur" -v s="$STEP" 'BEGIN{v=c+s; if(v>1)v=1; printf "%.2f", v}')" ;;
-    less)  new="$(awk -v c="$cur" -v s="$STEP" 'BEGIN{v=c-s; if(v<0)v=0; printf "%.2f", v}')" ;;
-    reset) new="$DEF_TINT" ;;
-    *) exit 0 ;;
+  more) new="$(awk -v c="$cur" -v s="$STEP" 'BEGIN{v=c+s; if(v>1)v=1; printf "%.2f", v}')" ;;
+  less) new="$(awk -v c="$cur" -v s="$STEP" 'BEGIN{v=c-s; if(v<0)v=0; printf "%.2f", v}')" ;;
+  reset) new="$DEF_TINT" ;;
+  *) exit 0 ;;
   esac
   printf 'background_tint %s\n' "$new" >"$TINT_CONF"
   for s in $(sockets); do "$KITTEN" @ --to "unix:$s" load-config 2>/dev/null; done
