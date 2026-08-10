@@ -109,7 +109,10 @@ penv() {
 }
 
 # Pyenv initialization
-eval "$(pyenv init -)"
+# --no-rehash skips the shim rebuild on every shell start (faster panes, and
+# avoids wedging on a stale ~/.pyenv/shims/.pyenv-shim lock). Run `pyenv rehash`
+# by hand after installing a package that adds a new executable.
+eval "$(pyenv init - --no-rehash)"
 if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
 
 # Utility functions
