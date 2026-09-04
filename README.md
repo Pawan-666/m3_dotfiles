@@ -177,7 +177,18 @@ brew install mpv
 
 # Stow config
 stow mpv
+
+# Build /Applications/mpv.app (Finder "Open With", drag-and-drop, Dock)
+./scripts/mpv-app-bundle.sh
 ```
+
+**Note on mpv.app:** the `mpv` formula ships only the CLI binary, and the `mpv`
+cask (`stolendata-mpv`) was disabled on 2026-09-01 for failing the macOS
+Gatekeeper check — so a `brew upgrade` leaves the terminal `mpv` working while
+`/Applications/mpv.app` disappears. `scripts/mpv-app-bundle.sh` wraps the
+formula's binary in mpv's own upstream bundle skeleton and re-registers it with
+LaunchServices under the usual `io.mpv` id, so existing file associations come
+back. Re-run it after mpv changes version.
 
 ### sketchybar/ - Menu Bar
 Highly customizable menu bar replacement.
