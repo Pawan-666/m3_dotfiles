@@ -99,7 +99,7 @@ keymap = [
 	{ on = [ "c", "D" ], run = "copy dirname",          desc = "Copy the path of the parent directory" },
 	{ on = [ "c", "f" ], run = "copy filename",         desc = "Copy the name of the file" },
 	{ on = [ "c", "n" ], run = "copy name_without_ext", desc = "Copy the name of the file without the extension" },
-	{ on = [ "c", "d" ], run = 'shell "drag \"$@\"" --confirm', desc = "Drag file to another app" },
+	{ on = [ "c", "d" ], run = 'shell -- drag %s', desc = "Drag file to another app" },
 
 	# Filter
 
@@ -334,22 +334,22 @@ keymap = [
 [[mgr.prepend_keymap]]
 # on   = [ "<C-s>" ]
 on   = [ "w" ]
-run  = 'shell "$SHELL" --block --confirm'
+run  = 'shell --block -- "$SHELL"'
 desc = "Open shell here"
 
 [[mgr.prepend_keymap]]
 on = "<C-p>"
 run = '''
-  shell 'qlmanage -p "$@"' --confirm
+  shell -- qlmanage -p %s
 '''
 
 # [[mgr.prepend_keymap]]
 # on = [ "<C-n>" ]
-# run = ''' shell 'ripdrag "$@" -x 2>/dev/null &' --confirm '''
+# run = ''' shell -- ripdrag %s -x 2>/dev/null & '''
 
 [[mgr.prepend_keymap]]
 on   = [ "<C-n>" ]
-run  = 'shell "drag \"$@\"" --confirm'
+run  = 'shell -- drag %s'
 desc = "Drag file to another app"
 
 

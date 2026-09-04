@@ -264,6 +264,13 @@ brew install ffmpegthumbnailer unar jq poppler fd ripgrep fzf zoxide
 stow yazi
 ```
 
+**Note on openers:** yazi 26.x passes selected paths through `%s` / `%s1`
+placeholders; the older shell-positional style (`"$@"`, `$1`) expands to
+nothing and openers silently launch with no file. The same applies to `shell`
+templates in `keymap.toml` (`%s`, `%h`), where `--confirm` is also gone. Media
+files open through `mpv.app` (see the mpv section) so the window comes to the
+front; it falls back to the `mpv` CLI if the bundle is missing.
+
 ### zsh/ - Z Shell
 Shell configuration with modern features.
 

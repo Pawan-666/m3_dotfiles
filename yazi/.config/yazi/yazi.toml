@@ -37,32 +37,37 @@ ueberzug_scale  = 1                # Ueberzug scaling factor
 ueberzug_offset = [ 0, 0, 0, 0 ]   # Ueberzug position offset
 
 [opener]
+# Yazi 26.x passes selected paths through the %s / %s1 placeholders — the old
+# shell-positional style ("$@", $1) silently expands to nothing.
 edit = [
-	{ run = '${EDITOR:-vi} "$@"', desc = "$EDITOR", block = true, for = "unix" },
-	{ run = 'code %*',    orphan = true, desc = "code",           for = "windows" },
-	{ run = 'code -w %*', block = true,  desc = "code (block)",   for = "windows" },
+	{ run = '${EDITOR:-vi} %s', desc = "$EDITOR", block = true, for = "unix" },
+	{ run = 'code %s',    orphan = true, desc = "code",         for = "windows" },
+	{ run = 'code -w %s', block = true,  desc = "code (block)", for = "windows" },
 ]
 open = [
-	{ run = 'xdg-open "$1"',                desc = "Open", for = "linux" },
-	{ run = 'open "$@"',                    desc = "Open", for = "macos" },
-	{ run = 'start "" "%1"', orphan = true, desc = "Open", for = "windows" },
-	{ run = 'termux-open "$1"',             desc = "Open", for = "android" },
+	{ run = 'xdg-open %s1',                desc = "Open", for = "linux" },
+	{ run = 'open %s',                     desc = "Open", for = "macos" },
+	{ run = 'start "" %s1', orphan = true, desc = "Open", for = "windows" },
+	{ run = 'termux-open %s1',             desc = "Open", for = "android" },
 ]
 reveal = [
-	{ run = 'xdg-open "$(dirname "$1")"',           desc = "Reveal", for = "linux" },
-	{ run = 'open -R "$1"',                         desc = "Reveal", for = "macos" },
-	{ run = 'explorer /select,"%1"', orphan = true, desc = "Reveal", for = "windows" },
-	{ run = 'termux-open "$(dirname "$1")"',        desc = "Reveal", for = "android" },
-	{ run = '''clear; exiftool "$1"; echo "Press enter to exit"; read _''', block = true, desc = "Show EXIF", for = "unix" },
+	{ run = 'xdg-open %d1',                        desc = "Reveal", for = "linux" },
+	{ run = 'open -R %s1',                         desc = "Reveal", for = "macos" },
+	{ run = 'explorer /select,%s1', orphan = true, desc = "Reveal", for = "windows" },
+	{ run = 'termux-open %d1',                     desc = "Reveal", for = "android" },
+	{ run = '''clear; exiftool %s1; echo "Press enter to exit"; read _''', block = true, desc = "Show EXIF", for = "unix" },
 ]
 extract = [
-	{ run = 'ya pub extract --list "$@"', desc = "Extract here", for = "unix" },
-	{ run = 'ya pub extract --list %*',   desc = "Extract here", for = "windows" },
+	{ run = 'ya pub extract --list %s', desc = "Extract here" },
 ]
 play = [
-	{ run = 'mpv --force-window "$@"', orphan = true, for = "unix" },
-	{ run = 'mpv --force-window %*', orphan = true, for = "windows" },
-	{ run = '''mediainfo "$1"; echo "Press enter to exit"; read _''', block = true, desc = "Show media info", for = "unix" },
+	# Launch mpv.app (see scripts/mpv-app-bundle.sh) so the window comes to the
+	# front as a real app instead of behind the terminal; -n forces a fresh
+	# instance per open. Falls back to the CLI binary if the bundle is missing.
+	{ run = 'open -nb io.mpv --args %s || mpv --force-window %s', orphan = true, desc = "Play", for = "macos" },
+	{ run = 'mpv --force-window %s', orphan = true, desc = "Play", for = "linux" },
+	{ run = 'mpv --force-window %s', orphan = true, desc = "Play", for = "windows" },
+	{ run = '''mediainfo %s1; echo "Press enter to exit"; read _''', block = true, desc = "Show media info", for = "unix" },
 ]
 
 [open]
