@@ -65,13 +65,11 @@ bindkey '^[w' kill-region              # Alt+W to kill region
 HISTSIZE=5000
 HISTFILE=~/.zsh_history
 SAVEHIST=$HISTSIZE
-HISTDUP=erase
 setopt appendhistory          # Append to history file
 setopt sharehistory          # Share history between sessions
 setopt hist_ignore_space     # Ignore commands starting with space
 setopt hist_ignore_all_dups  # Remove all duplicate entries
 setopt hist_save_no_dups     # Don't save duplicates
-setopt hist_ignore_dups      # Don't record duplicate entries
 setopt hist_find_no_dups     # Don't display duplicates in search
 
 # Completion styling
@@ -79,21 +77,25 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' menu no
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
-# zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # Aliases
 alias ls='ls --color'
 alias vim='nvim'
 alias vi='nvim'
+# nvim's TUI (0.12+) runs as a parent with an `nvim --embed` server child, and
+# lazy-tmux saves the child's command line. Replayed into a shell it waits on
+# stdin for RPC (blank screen), so drop --embed when stdin is a terminal.
+nvim() {
+  [[ $1 == --embed && -t 0 ]] && shift
+  command nvim "$@"
+}
 
 # Shell integrations
 eval "$(fzf --zsh)"
-# eval "$(zoxide init --cmd cd zsh)"
-#
 
 
 
-export PATH=/opt/homebrew/bin:/opt/homebrew/sbin:/opt/homebrew/opt/mysql-client/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:~/.local/bin:~/.cargo/bin:/nix/var/nix/profiles/default/bin:/opt/homebrew/opt/postgresql@18/bin:/Users/pawan/dragterm/dragterm:/Users/pawan/.deno/env
+export PATH=/opt/homebrew/bin:/opt/homebrew/sbin:/opt/homebrew/opt/mysql-client/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:~/.local/bin:~/.cargo/bin:/nix/var/nix/profiles/default/bin:/opt/homebrew/opt/postgresql@18/bin:/Users/pawan/dragterm/dragterm
 
 
 

@@ -258,7 +258,7 @@ Blazingly fast terminal file manager written in Rust.
 brew install yazi
 
 # Install optional dependencies
-brew install ffmpegthumbnailer unar jq poppler fd ripgrep fzf zoxide
+brew install ffmpegthumbnailer unar jq poppler fd ripgrep fzf
 
 # Stow config
 stow yazi
