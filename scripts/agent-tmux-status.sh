@@ -41,13 +41,17 @@ case "$1" in
       n=${#frames[@]}
       m=${#colors[@]}
       i=0
+      # Each frame is a single tmux call; the ownership/pane-alive checks cost two
+      # more forks, so they run every 4th frame (~2s) rather than every frame.
       while :; do
-        [ "$(tmux show -wv -t "$PANE" @ai_anim_pid 2>/dev/null)" = "$BASHPID" ] || break
-        tmux list-panes -a -F '#{pane_id}' 2>/dev/null | grep -qx "$PANE" || break
-        tmux set -w -t "$PANE" @ai_status "#[fg=colour${colors[i % m]},bold]${frames[i % n]}#[default] " 2>/dev/null
-        tmux refresh-client -S 2>/dev/null
+        if [ $((i % 4)) = 0 ]; then
+          [ "$(tmux show -wv -t "$PANE" @ai_anim_pid 2>/dev/null)" = "$BASHPID" ] || break
+          tmux display -p -t "$PANE" '' >/dev/null 2>&1 || break
+        fi
+        tmux set -w -t "$PANE" @ai_status "#[fg=colour${colors[i % m]},bold]${frames[i % n]}#[default] " \; \
+          refresh-client -S 2>/dev/null || break
         i=$((i + 1))
-        sleep 0.24
+        sleep 0.5
       done
       # Clear our registration if we still own it.
       [ "$(tmux show -wv -t "$PANE" @ai_anim_pid 2>/dev/null)" = "$BASHPID" ] \
