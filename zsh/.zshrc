@@ -160,3 +160,9 @@ npx()  { _load_nvm; npx  "$@"; }
 autoload -U edit-command-line
 zle -N edit-command-line
 bindkey '^X^E' edit-command-line
+
+#DONOTEDIT:AWS_HELPERS
+aws-selector() {
+    export AWS_PROFILE=default
+}
+#DONOTEDIT:AWS_HELPERS
