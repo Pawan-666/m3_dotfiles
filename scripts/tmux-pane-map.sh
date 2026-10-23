@@ -3,9 +3,8 @@
 # option @panemap (status-right shows #{@panemap}).
 #
 # The map is a 2x2 mini-screen of the window: each region occupied by a pane
-# OTHER than the active one is inked dim grey; the region you're actually in is
-# left as bare background (invisible). So a lone pane shows nothing, and a split
-# lights up only where the other pane(s) live.
+# OTHER than the active one is inked near-background grey, and the region
+# you're actually in is filled magenta. A lone pane shows nothing.
 #
 # Why a script (not pure tmux format): it is driven by the NON-active panes'
 # geometry, which — unlike the active pane's #{pane_left}/#{pane_right} — keeps
@@ -20,35 +19,45 @@ set -euo pipefail
 win="${1:-}"
 [ -z "$win" ] && exit 0
 
-geom=$(tmux display-message -p -t "$win" '#{window_width} #{window_height}' 2>/dev/null) || exit 0
-read -r W H <<<"$geom"
+geom=$(tmux display-message -p -t "$win" '#{window_width} #{window_height} #{window_zoomed_flag}' 2>/dev/null) || exit 0
+read -r W H zoomed <<<"$geom"
 [ -z "${W:-}" ] || [ -z "${H:-}" ] && exit 0
 HW=$((W / 2))   # vertical midpoint (x)
 HH=$((H / 2))   # horizontal midpoint (y)
 
-TL=0 TR=0 BL=0 BR=0   # a quarter is "grey" if some non-active pane overlaps it
+# Each quarter belongs to the pane covering most of its cells, so a short
+# active pane still claims its quarter and a short neighbour still shows up.
+# A zoomed active pane reports full-window geometry, so it's left out and
+# takes whatever quarters no other pane covers.
+ov() { local lo=$(( $1 > $3 ? $1 : $3 )) hi=$(( $2 < $4 ? $2 : $4 )); echo $(( hi >= lo ? hi - lo + 1 : 0 )); }
+QX=(0 "$HW" 0 "$HW") QXE=($((HW - 1)) $((W - 1)) $((HW - 1)) $((W - 1)))
+QY=(0 0 "$HH" "$HH") QYE=($((HH - 1)) $((HH - 1)) $((H - 1)) $((H - 1)))
+best=(0 0 0 0) grey=(0 0 0 0) others=0
 while read -r active L R T B; do
-  [ "$active" = "1" ] && continue          # skip active pane (collapses when zoomed)
-  left=0 right=0 top=0 bot=0
-  [ "$L" -lt "$HW" ] && left=1
-  [ "$R" -ge "$HW" ] && right=1
-  [ "$T" -lt "$HH" ] && top=1
-  [ "$B" -ge "$HH" ] && bot=1
-  [ "$left" = 1 ]  && [ "$top" = 1 ] && TL=1
-  [ "$right" = 1 ] && [ "$top" = 1 ] && TR=1
-  [ "$left" = 1 ]  && [ "$bot" = 1 ] && BL=1
-  [ "$right" = 1 ] && [ "$bot" = 1 ] && BR=1
+  [ "$active" = 1 ] && [ "$zoomed" = 1 ] && continue
+  [ "$active" = 1 ] || others=1
+  for i in 0 1 2 3; do
+    area=$(( $(ov "$L" "$R" "${QX[i]}" "${QXE[i]}") * $(ov "$T" "$B" "${QY[i]}" "${QYE[i]}") ))
+    if [ "$area" -gt "${best[i]}" ]; then
+      best[i]=$area
+      grey[i]=$(( active == 1 ? 0 : 1 ))
+    fi
+  done
 done < <(tmux list-panes -t "$win" -F '#{pane_active} #{pane_left} #{pane_right} #{pane_top} #{pane_bottom}')
+TL=${grey[0]} TR=${grey[1]} BL=${grey[2]} BR=${grey[3]}
 
-# per column: ink the grey (other-pane) halves — both->███ top->▀▀▀ bottom->▄▄▄ none->spaces
-col() {
-  if   [ "$1" = 1 ] && [ "$2" = 1 ]; then printf '███'
-  elif [ "$1" = 1 ];                 then printf '▀▀▀'
-  elif [ "$2" = 1 ];                 then printf '▄▄▄'
-  else                                    printf '   '
-  fi
-}
-map="#[fg=colour240 bg=default]$(col "$TL" "$BL")$(col "$TR" "$BR")#[default fg=colour244]"
+# Quarters no other pane covers are where you are: ink them magenta (matching
+# pane-active-border-style) and the rest a near-background grey, so other panes
+# read as empty slots. Each column is one '▀' whose fg paints the top quarter
+# and bg the bottom; block elements are drawn by the terminal to fill the cell
+# exactly, unlike outline glyphs (▯) which render at font size and misalign.
+color() { if [ "$1" = 1 ]; then printf 'colour237'; else printf 'magenta'; fi; }
+col() { printf '#[fg=%s bg=%s]▀' "$(color "$1")" "$(color "$2")"; }
+if [ "$others" = 0 ]; then
+  map=""   # lone pane: nothing to locate
+else
+  map="$(col "$TL" "$BL")$(col "$TR" "$BR")#[default fg=colour244]"
+fi
 
 tmux set-option -w -t "$win" @panemap "$map" 2>/dev/null || exit 0
 tmux refresh-client -S 2>/dev/null || true
