@@ -32,7 +32,9 @@ require("lazy").setup({
   },
   install = { colorscheme = { "gruvbox", "habamax" } },
   checker = {
-    enabled = true, -- check for plugin updates periodically
+    -- off: every open nvim (often ~10 via tmux) would git-fetch all plugins
+    -- hourly; run :Lazy update by hand instead
+    enabled = false,
     notify = false, -- notify on update
   }, -- automatically check for plugin updates
   performance = {
