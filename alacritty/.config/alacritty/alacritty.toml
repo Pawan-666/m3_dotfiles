@@ -31,9 +31,9 @@ size = 20.0
 decorations = "buttonless"
 
 # Window transparency/opacity settings (0.0 = fully transparent, 1.0 = fully opaque)
-# opacity = 0.99  # Almost opaque
+opacity = 0.94  # Almost opaque
 # opacity = 0.9     # Current setting - slightly transparent
-# opacity = 0.8   # More transparent
+# opacity = 0.9   # More transparent
 # opacity = 0.2# Very transparent
 
 # Normal font family and style configuration
