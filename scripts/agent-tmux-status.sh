@@ -4,6 +4,7 @@
 # rendered by window-status-format next to each window/tab.
 #
 #   working -> animated green twinkling star (Claude-style ✳), background loop
+#   done    -> static gray dot + macOS notification (terminal-notifier)
 #   other   -> static gray dot
 #   clear   -> nothing
 #
@@ -58,7 +59,18 @@ case "$1" in
         && tmux set -wu -t "$PANE" @ai_anim_pid 2>/dev/null
     } >/dev/null 2>&1 &
     ;;
-  waiting|done|idle)
+  done)
+    stop_anim
+    tmux set -w -t "$PANE" @ai_status "#[fg=colour244]●#[default] " 2>/dev/null
+    tmux refresh-client -S 2>/dev/null
+    # macOS banner; backgrounded so the hook returns immediately.
+    if command -v terminal-notifier >/dev/null 2>&1; then
+      where="$(tmux display -p -t "$PANE" '#S:#W' 2>/dev/null)"
+      terminal-notifier -title "AI agent done" -message "${where:-tmux}" \
+        -sound Glass -group "ai-$PANE" >/dev/null 2>&1 &
+    fi
+    ;;
+  waiting|idle)
     stop_anim
     tmux set -w -t "$PANE" @ai_status "#[fg=colour244]●#[default] " 2>/dev/null
     tmux refresh-client -S 2>/dev/null
