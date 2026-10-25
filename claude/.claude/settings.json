@@ -1,0 +1,82 @@
+{
+  "model": "opus[1m]",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/pawan/mac_dotfiles/scripts/agent-tmux-status.sh idle"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/pawan/mac_dotfiles/scripts/agent-tmux-status.sh working"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/pawan/mac_dotfiles/scripts/agent-tmux-status.sh working"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "matcher": "permission_prompt",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/pawan/mac_dotfiles/scripts/agent-tmux-status.sh permission"
+          }
+        ]
+      },
+      {
+        "matcher": "idle_prompt|elicitation_dialog",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/pawan/mac_dotfiles/scripts/agent-tmux-status.sh waiting"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/pawan/mac_dotfiles/scripts/agent-tmux-status.sh done"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/pawan/mac_dotfiles/scripts/agent-tmux-status.sh clear"
+          }
+        ]
+      }
+    ]
+  },
+  "enabledPlugins": {
+    "terraform-skill@antonbabenko": true,
+    "vanta-mcp-plugin@claude-plugins-official": true
+  },
+  "effortLevel": "high",
+  "tui": "fullscreen",
+  "switchModelsOnFlag": true
+}
