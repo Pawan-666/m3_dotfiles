@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # claude.ai "Current session" usage bar on the tmux status bar.
 #
-#   █░░░░░░░░░ 1% 4h56m
+#   [ 4h56m ] 1%   (gray bar, countdown inside, fill shown by background)
 #
 # Two modes:
 #  - Claude Code statusLine command (no args): Claude pipes session JSON on
@@ -15,7 +15,7 @@
 # Usage (settings.json): "statusLine": {"type": "command", "command": "<this script>"}
 #        (tmux.conf):    set -g status-right '#(<this script> tmux) ...'
 
-BAR_WIDTH=10
+BAR_WIDTH=7
 
 if [ "$1" != tmux ]; then
   [ -z "$TMUX" ] && exit 0
@@ -47,11 +47,13 @@ filled=$(( (pct_int * BAR_WIDTH + 50) / 100 ))
 [ "$pct_int" -gt 0 ] && [ "$filled" -eq 0 ] && filled=1
 [ "$filled" -gt "$BAR_WIDTH" ] && filled=$BAR_WIDTH
 
-done_cells=""; todo_cells=""
-for ((i = 0; i < BAR_WIDTH; i++)); do
-  if [ "$i" -lt "$filled" ]; then done_cells+="█"; else todo_cells+="░"; fi
-done
+# The reset countdown is printed inside the bar: centre it, then split it at
+# the fill point so each half gets its own background.
+pad=$(( (BAR_WIDTH - ${#left_txt}) / 2 ))
+[ "$pad" -lt 0 ] && pad=0
+label="$(printf '%*s%s%*s' "$pad" '' "$left_txt" "$BAR_WIDTH" '')"
+label="${label:0:BAR_WIDTH}"
 
-printf '#[fg=colour33]%s#[fg=colour238]%s#[default] %s%%%s ' \
-  "$done_cells" "$todo_cells" "$pct_int" "${left_txt:+ $left_txt}"
+printf '#[fg=colour235,bg=colour246]%s#[fg=colour250,bg=colour238]%s#[default] %s%% ' \
+  "${label:0:filled}" "${label:filled}" "$pct_int"
 exit 0
