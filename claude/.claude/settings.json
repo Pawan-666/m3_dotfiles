@@ -3,7 +3,8 @@
   "statusLine": {
     "type": "command",
     "command": "/Users/pawan/mac_dotfiles/scripts/claude-statusline.sh",
-    "padding": 0
+    "padding": 0,
+    "refreshInterval": 60
   },
   "hooks": {
     "SessionStart": [
